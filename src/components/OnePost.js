@@ -35,8 +35,10 @@ const OnePost = () => {
         .catch(err => console.error(err));
     }, [slug])
 
+    if(!postData)return <div style={{display:'flex', justifyContent:'center', alignContent:'center'}}>Estamos contactando UTMitas para dar asesorías</div>
+
     return (
-        <h1>One Post Page</h1>
+        <div></div>
     )
 }
 
