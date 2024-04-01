@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import sanityClient from '../client';
-import { ImageUrlBuilder } from '@sanity/image-url';
+import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 
-const builder = ImageUrlBuilder(sanityClient);
+const builder = imageUrlBuilder(sanityClient);
 
 const urlFor = (source) => {
     return builder.image(source);
@@ -33,9 +33,11 @@ const OnePost = () => {
         )
         .then(data => setPostData(data))
         .catch(err => console.error(err));
-    }, [slug])
+    }, [slug]) 
 
-    if(!postData)return <div style={{display:'flex', justifyContent:'center', alignContent:'center'}}>Estamos contactando UTMitas para dar asesorías</div>
+    if (!postData || !postData.title) {
+        return <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', textAlign:'center', fontSize:'2rem' }}>Estamos contactando UTMitas para dar asesorías</div>;
+    }
 
     return (
         <div></div>
