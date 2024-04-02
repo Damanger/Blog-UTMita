@@ -26,7 +26,7 @@ const AllPost = () => {
     useEffect(() => {
         const gridItems = document.querySelectorAll('.grid-item');
         gridItems.forEach((item, index) => {
-            item.style.animationDelay = `${index * 0.3}s`;
+            item.style.animationDelay = `${index * 0.2}s`;
         });
     }, [allPostData]);
 
