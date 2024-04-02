@@ -31,7 +31,7 @@ const OnePost = () => {
             }`,
             { slug }
         )
-        .then(data => setPostData(data))
+        .then(data => setPostData(data[0]))
         .catch(err => console.error(err));
     }, [slug]) 
 
@@ -40,7 +40,19 @@ const OnePost = () => {
     }
 
     return (
-        <div></div>
+        <div>
+            <h2>{postData.title}</h2>
+            <div>
+                <img src={urlFor(postData.authorImage).url()} alt='Imagen_UTMita'/>
+                <h4>{postData.name}</h4>
+            </div>
+            <div>
+                <img src={urlFor(postData.mainImage).url()} alt='imagen' style={{height:'10rem'}}/>
+            </div>
+            <div>
+                <BlockContent blocks={postData.body}/>
+            </div>
+        </div>
     )
 }
 
