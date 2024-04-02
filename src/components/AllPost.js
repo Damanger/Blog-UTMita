@@ -43,7 +43,7 @@ const AllPost = () => {
                             className={`grid-item ${selectedImage !== null && selectedImage !== index ? 'opacity-40' : ''}`}
                             onMouseEnter={() => handleMouseEnter(index)}
                             onMouseLeave={handleMouseLeave}>
-                            <img src={post.mainImage.asset.url} alt='UTMita' />
+                            <img src={post.mainImage.asset.url} alt='UTMita' style={{ width: '10rem', height: 'auto' }} />
                             <h2>{post.title}</h2>
                         </Link>
                     ))}
