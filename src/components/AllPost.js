@@ -23,6 +23,13 @@ const AllPost = () => {
         .catch(err => console.error(err));
     }, []);
 
+    useEffect(() => {
+        const gridItems = document.querySelectorAll('.grid-item');
+        gridItems.forEach((item, index) => {
+            item.style.animationDelay = `${index * 0.5}s`;
+        });
+    }, [allPostData]);
+
     return (
         <>
             <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTMitas</h1>

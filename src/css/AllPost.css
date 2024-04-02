@@ -13,11 +13,18 @@
     justify-content: center;
     text-decoration: none;
     color: black;
-    transition: opacity 0.6s ease;
+    transition: opacity 0.6s ease-in-out;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
 }
 
-.grid-item img {
-    margin: 0 auto;
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .grid-item h2 {
@@ -26,15 +33,19 @@
 
 .post-image {
     transition: transform 0.6s ease;
+    margin: 0 auto;
 }
 
 .post-image:hover {
-    transform: scale(1.1);
+    transform: scale(1.15);
 }
 
 @media (max-width: 1024px) {
     .grid-container {
         grid-template-columns: repeat(3, 1fr);
+    }
+    .post-image:hover {
+        transform: none;
     }
 }
 
@@ -42,8 +53,7 @@
     .grid-container {
         grid-template-columns: repeat(1, 1fr);
     }
-}
-
-.opacity-40 {
-    opacity: 0.4;
+    .post-image:hover {
+        transform: none;
+    }
 }
