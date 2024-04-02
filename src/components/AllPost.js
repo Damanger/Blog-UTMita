@@ -21,25 +21,25 @@ const AllPost = () => {
         )
         .then(data => setAllPostData(data))
         .catch(err => console.error(err));
-    }, [])
+    }, []);
 
     return (
-        <div>
-            <div>
-                <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTMitas</h1>
-                <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTMitas</h2>
-                <div className="grid-container">
-                    {allPostData && allPostData.map((post) => (
-                        <Link to={'/' + post.slug.current} key={post.slug.current} className="grid-item">
+        <>
+            <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTMitas</h1>
+            <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTMitas</h2>
+            <div className="grid-container">
+                {allPostData && allPostData.map((post) => (
+                    <div key={post.slug.current} className="grid-item">
+                        <Link to={'/' + post.slug.current}>
                             <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
-                            <div style={{display:'flex', justifyContent:'center', alignItems:'flex-end', height:'100%'}}>
-                                <h2>{post.title}</h2>
-                            </div>
                         </Link>
-                    ))}
-                </div>
+                        <div style={{display:'flex', justifyContent:'center', alignItems:'flex-end', height:'100%'}}>
+                            <h2>{post.title}</h2>
+                        </div>
+                    </div>
+                ))}
             </div>
-        </div>
+        </>
     )
 }
 
