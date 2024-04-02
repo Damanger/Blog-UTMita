@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sanityClient from '../client';
+import '../css/AllPost.css';
 
 const AllPost = () => {
     const [allPostData, setAllPostData] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
-    const [numColumns, setNumColumns] = useState(5); // Número inicial de columnas
 
     useEffect(() =>{
         sanityClient.fetch(
@@ -24,21 +24,6 @@ const AllPost = () => {
         .catch(err => console.error(err));
     }, [])
 
-    useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth <= 768) {
-                setNumColumns(1);
-            } else if (window.innerWidth <= 1024) {
-                setNumColumns(3);
-            } else {
-                setNumColumns(5);
-            }
-        };
-
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
-
     const handleMouseEnter = (index) => {
         setSelectedImage(index);
     }
@@ -52,18 +37,14 @@ const AllPost = () => {
             <div>
                 <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTMitas</h1>
                 <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTMitas</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: `repeat(${numColumns}, 1fr)`, gap: '10px', justifyContent: 'space-evenly', padding: '10px' }}>
+                <div className="grid-container">
                     {allPostData && allPostData.map((post, index) => (
                         <Link to={'/' + post.slug.current} key={post.slug.current}
-                            style={{ display: 'flex', textAlign: 'center', 
-                            flexDirection: 'column', justifyContent: 'center', 
-                            textDecoration:'none', color:'black', 
-                            opacity: selectedImage !== null && selectedImage !== index ? '0.4' : '1',
-                            transition: 'opacity 0.6s ease' }}
+                            className={`grid-item ${selectedImage !== null && selectedImage !== index ? 'opacity-40' : ''}`}
                             onMouseEnter={() => handleMouseEnter(index)}
                             onMouseLeave={handleMouseLeave}>
-                            <img src={post.mainImage.asset.url} style={{ width: '10rem', height: 'auto', margin: '0 auto' }} alt='UTMita' />
-                            <h2 style={{ margin: '5px 0' }}>{post.title}</h2>
+                            <img src={post.mainImage.asset.url} alt='UTMita' />
+                            <h2>{post.title}</h2>
                         </Link>
                     ))}
                 </div>
