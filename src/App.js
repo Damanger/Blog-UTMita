@@ -13,7 +13,7 @@ const App = () => {
   return (
     <BrowserRouter>
     {isLoading ? (
-        <Cargando url="https://raw.githubusercontent.com/Damanger/Portfolio/main/public/Ardilla.webp" />
+        <Cargando url="https://raw.githubusercontent.com/Damanger/Blog-UTMita/main/public/utm2.webp" />
       ) : (
         <div>
           <Routes>
