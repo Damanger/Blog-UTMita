@@ -26,8 +26,7 @@ const OnePost = () => {
                     }
                 },
                 body,
-                "name": author->name,
-                "authorImage": author->image
+                "name": author->name
             }`,
             { slug }
         )
@@ -41,15 +40,14 @@ const OnePost = () => {
 
     return (
         <div>
-            <h2>{postData.title}</h2>
-            <div>
-                <img src={urlFor(postData.authorImage).url()} alt='Imagen_UTMita'/>
+            <h2 style={{display:'flex', justifyContent:'center'}}>{postData.title}</h2>
+            <div style={{display:'flex', justifyContent:'center'}}>
                 <h4>{postData.name}</h4>
             </div>
-            <div>
-                <img src={urlFor(postData.mainImage).url()} alt='imagen' style={{height:'10rem'}}/>
+            <div style={{display:'flex', justifyContent:'center'}}>
+                <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' style={{height:'10rem'}}/>
             </div>
-            <div>
+            <div style={{display:'flex', justifyContent:'center'}}>
                 <BlockContent blocks={postData.body}/>
             </div>
         </div>

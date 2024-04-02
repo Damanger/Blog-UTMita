@@ -26,9 +26,9 @@ const AllPost = () => {
             <div>
                 <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTMitas</h1>
                 <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTMitas</h2>
-                <div>
+                <div style={{display:'flex', justifyContent:'space-evenly'}}>
                     {allPostData && allPostData.map((post, index) => (
-                        <Link to={'/' + post.slug.current} key={post.slug.current}>
+                        <Link to={'/' + post.slug.current} key={post.slug.current} style={{display:'flex', textAlign:'center'}}>
                             <span key={index}>
                                 <img src={post.mainImage.asset.url} style={{width:'10rem', height:'auto'}} alt='UTMita'/>
                                 <span>
