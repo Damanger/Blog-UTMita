@@ -54,7 +54,7 @@ const OnePost = () => {
                 <h4>{postData.name}</h4>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' style={{height:'10rem'}}/>
+                <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' width="160" height="auto"/>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
                 <BlockContent blocks={postData.body}/>
