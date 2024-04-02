@@ -5,6 +5,7 @@ import sanityClient from '../client';
 const AllPost = () => {
     const [allPostData, setAllPostData] = useState(null);
     const [selectedImage, setSelectedImage] = useState(null);
+    const [numColumns, setNumColumns] = useState(5); // Número inicial de columnas
 
     useEffect(() =>{
         sanityClient.fetch(
@@ -23,6 +24,21 @@ const AllPost = () => {
         .catch(err => console.error(err));
     }, [])
 
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth <= 768) {
+                setNumColumns(1);
+            } else if (window.innerWidth <= 1024) {
+                setNumColumns(3);
+            } else {
+                setNumColumns(5);
+            }
+        };
+
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
     const handleMouseEnter = (index) => {
         setSelectedImage(index);
     }
@@ -36,7 +52,7 @@ const AllPost = () => {
             <div>
                 <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTMitas</h1>
                 <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTMitas</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: '10px', justifyContent: 'space-evenly', padding: '10px' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: `repeat(${numColumns}, 1fr)`, gap: '10px', justifyContent: 'space-evenly', padding: '10px' }}>
                     {allPostData && allPostData.map((post, index) => (
                         <Link to={'/' + post.slug.current} key={post.slug.current}
                             style={{ display: 'flex', textAlign: 'center', 
@@ -56,4 +72,4 @@ const AllPost = () => {
     )
 }
 
-export default AllPost
+export default AllPost;
