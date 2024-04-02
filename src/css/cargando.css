@@ -8,17 +8,19 @@
     justify-content: center;
     align-items: center;
     background-color: #030712;
-    opacity: 0.9;
     z-index: 999;
-}
-.cargando.visible {
-    opacity: 1;
-}
-.cargando.oculto {
-    opacity: 0;
+    animation: fadeOut 1.5s ease-out forwards;
     pointer-events: none;
 }
 img {
     max-width: 100%;
     max-height: 100%;
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
 }
