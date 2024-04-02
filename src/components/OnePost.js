@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
+import { Link } from 'react-router-dom';
 
 const builder = imageUrlBuilder(sanityClient);
 
@@ -35,7 +36,15 @@ const OnePost = () => {
     }, [slug]) 
 
     if (!postData || !postData.title) {
-        return <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', position:'absolute', top:'50%', left:'50%', transform:'translate(-50%,-50%)', textAlign:'center', fontSize:'2rem' }}>Estamos contactando UTMitas para dar asesorías</div>;
+        return( 
+        <>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', fontSize: '2rem' }}>
+                <div>Estamos contactando UTMitas para dar asesorías</div>
+                <div>
+                    <button><Link to="/" style={{ textDecoration: "none", color: "red" }}>regresar a la página principal</Link></button>
+                </div>
+            </div>
+        </>);
     }
 
     return (
