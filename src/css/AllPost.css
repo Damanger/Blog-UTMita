@@ -68,20 +68,16 @@
 .input-wrapper {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: right;
     position: relative;
+    margin-right: 3.5rem;
+    margin-bottom: 1rem;
 }
 
 .input {
     border-style: none;
-    height: 4rem;
-    width: 4rem;
     padding: 10px;
     outline: none;
-    border-radius: 50%;
-    transition: 0.5s ease-in-out;
-    background-color: #1557c0;
-    box-shadow: 0px 0px 3px #1557c0;
     text-align: center;
 }
 
@@ -96,18 +92,11 @@
     color: #8f8f8f;
 }
 
-.input:focus {
+.input, .input:focus {
     box-shadow: none;
-    width: 15rem;
+    width: 12rem;
     border-radius: 0px;
     background-color: transparent;
     border-bottom: 3px solid #1557c0;
     transition: all 500ms cubic-bezier(0, 0.11, 0.35, 2);
-}
-
-.search-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
 }
