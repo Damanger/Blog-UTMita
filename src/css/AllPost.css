@@ -16,6 +16,7 @@
     transition: opacity 0.3s ease-in-out;
     opacity: 0;
     animation: fadeIn 0.3s forwards;
+    margin-bottom: 0.75rem;
 }
 
 @keyframes fadeIn {

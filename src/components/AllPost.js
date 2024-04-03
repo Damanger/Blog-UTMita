@@ -34,7 +34,7 @@ const AllPost = () => {
         <>
             <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTeMitas</h1>
             <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTeMitas</h2>
-            <div className="grid-container">
+            <div className="grid-container" >
                 {allPostData && allPostData.map((post) => (
                     <div key={post.slug.current} className="grid-item">
                         <Link to={'/' + post.slug.current}>
