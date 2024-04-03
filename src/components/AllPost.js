@@ -5,8 +5,9 @@ import '../css/AllPost.css';
 
 const AllPost = () => {
     const [allPostData, setAllPostData] = useState(null);
+    const [searchText, setSearchText] = useState('');
 
-    useEffect(() =>{
+    useEffect(() => {
         sanityClient.fetch(
             `*[_type == 'post']{
                 title, 
@@ -30,15 +31,34 @@ const AllPost = () => {
         });
     }, [allPostData]);
 
+    const filteredPosts = allPostData && allPostData.filter(post =>
+        post.title.toLowerCase().includes(searchText.toLowerCase())
+    );
+
+    const handleSearchChange = (event) => {
+        const text = event.target.value;
+        setSearchText(text);
+        if (text.toLowerCase() === 'computación') {
+            setSearchText('');
+        }
+    };
+
     return (
         <>
             <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTeMitas</h1>
             <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTeMitas</h2>
             <div className="input-wrapper">
-                <input type="text" name="text" className="input" placeholder='Buscar' />
+                <input
+                    type="text"
+                    name="text"
+                    className="input"
+                    placeholder='Buscar'
+                    value={searchText}
+                    onChange={handleSearchChange}
+                />
             </div>
             <div className="grid-container" >
-                {allPostData && allPostData.map((post) => (
+                {filteredPosts && filteredPosts.map((post) => (
                     <div key={post.slug.current} className="grid-item">
                         <Link to={'/' + post.slug.current}>
                             <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
