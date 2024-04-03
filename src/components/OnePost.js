@@ -49,9 +49,9 @@ const OnePost = () => {
 
     return (
         <div>
-            <h2 style={{display:'flex', justifyContent:'center'}}>{postData.title}</h2>
+            <h1 style={{display:'flex', justifyContent:'center'}}>{postData.title}</h1>
             <div style={{display:'flex', justifyContent:'center'}}>
-                <h4>{postData.name}</h4>
+                <h2>{postData.name}</h2>
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
                 <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' width="160" height="auto"/>
