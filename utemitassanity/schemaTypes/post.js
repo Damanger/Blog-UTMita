@@ -7,7 +7,7 @@ export default defineType({
   fields: [
     defineField({
       name: 'title',
-      title: 'Title',
+      title: 'Nombre',
       type: 'string',
     }),
     defineField({
@@ -35,12 +35,12 @@ export default defineType({
     }),
     defineField({
       name: 'publishedAt',
-      title: 'Published at',
+      title: 'Fecha',
       type: 'datetime',
     }),
     defineField({
       name: 'body',
-      title: 'Body',
+      title: 'Materias que da',
       type: 'blockContent',
     }),
   ],

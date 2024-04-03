@@ -34,6 +34,9 @@ const AllPost = () => {
         <>
             <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTeMitas</h1>
             <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTeMitas</h2>
+            <div className="input-wrapper">
+                <input type="text" name="text" className="input" placeholder='Buscar' />
+            </div>
             <div className="grid-container" >
                 {allPostData && allPostData.map((post) => (
                     <div key={post.slug.current} className="grid-item">
