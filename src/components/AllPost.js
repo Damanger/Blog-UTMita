@@ -61,7 +61,9 @@ const AllPost = () => {
                             <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
                         </Link>
                         <div style={{display:'flex', justifyContent:'center', alignItems:'flex-end', height:'100%'}}>
+                        <Link to={'/' + post.slug.current}>
                             <h2>{post.title}</h2>
+                        </Link>
                         </div>
                     </div>
                 ))}

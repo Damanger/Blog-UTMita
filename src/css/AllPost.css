@@ -36,6 +36,7 @@
 .grid-item a{
     margin-left: auto;
     margin-right: auto;
+    text-decoration: none;
 }
 
 .post-image {
