@@ -64,6 +64,10 @@
     .post-image:hover {
         transform: none;
     }
+    .input-wrapper{
+        justify-content: center !important;
+        margin-right: 0 !important;
+    }
 }
 
 .input-wrapper {
