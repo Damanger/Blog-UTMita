@@ -41,7 +41,7 @@ const OnePost = () => {
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', fontSize: '2rem' }}>
                 <div>Estamos contactando UTMitas para dar asesorías</div>
                 <div>
-                    <button><Link to="/" style={{ textDecoration: "none", color: "red" }}>regresar a la página principal</Link></button>
+                    <button><Link to="/" style={{ textDecoration: "none" }}>Regresar a la página principal</Link></button>
                 </div>
             </div>
         </>);
@@ -58,6 +58,11 @@ const OnePost = () => {
             </div>
             <div style={{display:'flex', justifyContent:'center'}}>
                 <BlockContent blocks={postData.body}/>
+            </div>
+            <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
+                <Link to="/" style={{ textDecoration: "none"}}>
+                    <button>Regresar</button>
+                </Link>
             </div>
         </div>
     )
