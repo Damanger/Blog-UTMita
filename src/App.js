@@ -1,8 +1,8 @@
 import './App.css';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AllPosts, OnePost } from './components';
-import Cargando from './components/Cargando';
+const Cargando = lazy(() => import('./components/Cargando'));
 
 const App = () => {
   const [isLoading, setIsLoading] = useState(true);
