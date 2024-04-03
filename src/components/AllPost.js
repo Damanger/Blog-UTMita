@@ -35,6 +35,11 @@ const AllPost = () => {
         post.title.toLowerCase().includes(searchText.toLowerCase())
     );
 
+    const handleSearchChange = (event) => {
+        const text = event.target.value;
+        setSearchText(text);
+    };
+
     return (
         <>
             <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTeMitas</h1>
@@ -46,12 +51,13 @@ const AllPost = () => {
                     className="input"
                     placeholder='Buscar'
                     value={searchText}
+                    onChange={handleSearchChange}
                 />
             </div>
             <div className="grid-container" >
                 {filteredPosts && filteredPosts.map((post) => (
                     <div key={post.slug.current} className="grid-item">
-                        <Link to={'/' + post.slug.current} style={{display: 'flex', width: '10rem'}}>
+                        <Link to={'/' + post.slug.current}>
                             <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
                         </Link>
                         <div style={{display:'flex', justifyContent:'center', alignItems:'flex-end', height:'100%'}}>
