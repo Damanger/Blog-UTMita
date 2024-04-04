@@ -22,7 +22,7 @@
     justify-content: center;
 }
 
-.form input {
+.form input, .form select {
     outline: 0;
     border: 1px solid rgb(219, 213, 213);
     padding: 8px 14px;
@@ -30,6 +30,10 @@
     width: 80%;
     height: 50px;
     color: black;
+}
+
+.form select{
+    width: 90% !important;
 }
 
 .form textarea {
