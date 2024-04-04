@@ -3,6 +3,7 @@ import React, { useState, useEffect, lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { AllPosts, OnePost } from './components';
 import Navbar from './components/NavBar';
+import Contacto from './components/Contacto';
 const Cargando = lazy(() => import('./components/Cargando'));
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
         <Navbar/>
           <Routes>
             <Route Component={AllPosts} path='/' exact/>
+            <Route Component={Contacto} path='/contacto' exact/>
             <Route Component={OnePost} path='/:slug' exact/>
           </Routes>
         </>

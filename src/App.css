@@ -11,9 +11,9 @@ html,body{
 
 button {
     position: relative;
-    background-color: rgb(230, 34, 77);
+    background-color: royalblue;
     border-radius: 5px;
-    box-shadow: rgb(121, 18, 55) 0px 4px 0px 0px;
+    box-shadow: rgb(21, 18, 121) 0px 4px 0px 0px;
     background-repeat: no-repeat;
     cursor: pointer;
     box-sizing: border-box;
@@ -24,20 +24,4 @@ button {
     transition: all 0.3s ease-in-out;
     z-index: 1;
     overflow: hidden;
-}
-
-button::before {
-    background-color: rgb(248, 50, 93);
-    width: 0;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: -1;
-    transition: width 700ms ease-in-out;
-    display: inline-block;
-}
-
-button:hover::before {
-    width: 100%;
 }
