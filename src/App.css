@@ -1,6 +1,8 @@
 html,body{
     background: linear-gradient(to right, #030712, #0E3047);
     background-size: cover;
+    width: 100%;
+    height: 100%;
 }
 
 *{
