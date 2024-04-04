@@ -57,13 +57,17 @@ const AllPost = () => {
             <div className="grid-container" >
                 {filteredPosts && filteredPosts.map((post) => (
                     <div key={post.slug.current} className="grid-item">
-                        <Link to={'/' + post.slug.current}>
-                            <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
-                        </Link>
-                        <div style={{display:'flex', justifyContent:'center', alignItems:'flex-end', height:'100%'}}>
-                        <Link to={'/' + post.slug.current}>
-                            <h2>{post.title}</h2>
-                        </Link>
+                        <div className="card">
+                            <div className="image">
+                                <Link to={'/' + post.slug.current}>
+                                    <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
+                                </Link>
+                            </div>
+                            <span className="title">
+                                <Link to={'/' + post.slug.current}>
+                                    <h2>{post.title}</h2>
+                                </Link>
+                            </span>
                         </div>
                     </div>
                 ))}
