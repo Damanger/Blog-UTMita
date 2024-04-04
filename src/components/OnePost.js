@@ -4,6 +4,7 @@ import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
+import '../css/OnePost.css';
 
 const builder = imageUrlBuilder(sanityClient);
 
@@ -48,7 +49,7 @@ const OnePost = () => {
     }
 
     return (
-        <div>
+        <>
             <h1 style={{display:'flex', justifyContent:'center'}}>{postData.title}</h1>
             <div style={{display:'flex', justifyContent:'center'}}>
                 <h2>{postData.name}</h2>
@@ -56,7 +57,7 @@ const OnePost = () => {
             <div style={{display:'flex', justifyContent:'center'}}>
                 <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' width="160" height="auto"/>
             </div>
-            <div style={{display:'flex', justifyContent:'center'}}>
+            <div style={{display:'flex', justifyContent:'center', textAlign:'center'}}>
                 <BlockContent blocks={postData.body}/>
             </div>
             <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
@@ -64,7 +65,7 @@ const OnePost = () => {
                     <button>Regresar</button>
                 </Link>
             </div>
-        </div>
+        </>
     )
 }
 

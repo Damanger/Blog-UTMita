@@ -17,12 +17,12 @@ const App = () => {
     {isLoading ? (
         <Cargando url="https://raw.githubusercontent.com/Damanger/Blog-UTMita/main/public/utm2.webp" />
       ) : (
-        <div>
+        <>
           <Routes>
             <Route Component={AllPosts} path='/' exact/>
             <Route Component={OnePost} path='/:slug' exact/>
           </Routes>
-        </div>
+        </>
       )}
     </BrowserRouter>
   );
