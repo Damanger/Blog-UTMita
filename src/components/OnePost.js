@@ -57,8 +57,9 @@ const OnePost = () => {
             <div style={{display:'flex', justifyContent:'center'}}>
                 <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' width="160" height="auto"/>
             </div>
-            <div style={{display:'flex', justifyContent:'center', textAlign:'center'}}>
-                <BlockContent blocks={postData.body}/>
+            <h3 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>Materias o cursos que puedo impartir:</h3>
+            <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
+                <BlockContent blocks={postData.body} />
             </div>
             <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
                 <Link to="/" style={{ textDecoration: "none"}}>
