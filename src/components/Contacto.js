@@ -31,7 +31,7 @@ export default function Contacto() {
                 <input type="text" placeholder="Carrera" />
                 <input type="number" placeholder="Teléfono" />
                 <input type="email" placeholder="Correo" />
-                <label htmlFor="file-upload" style={{color:'gray'}}>Credencial UTM</label>
+                <label htmlFor="file-upload" style={{color:'black'}}>Credencial UTM</label>
                 <input type="file" id="file-upload" accept="image/*" onChange={updateFileName} />
                 {imagePreview && <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />}
                 <span>{fileName ? `Credencial UTM: ${fileName}` : "Seleccione un archivo"}</span>
