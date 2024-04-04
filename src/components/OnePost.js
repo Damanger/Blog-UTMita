@@ -49,7 +49,7 @@ const OnePost = () => {
     }
 
     return (
-        <>
+        <div className='Tutor'>
             <h1 style={{display:'flex', justifyContent:'center'}}>{postData.title}</h1>
             <div style={{display:'flex', justifyContent:'center'}}>
                 <h2>{postData.name}</h2>
@@ -66,7 +66,7 @@ const OnePost = () => {
                     <button>Regresar</button>
                 </Link>
             </div>
-        </>
+        </div>
     )
 }
 
