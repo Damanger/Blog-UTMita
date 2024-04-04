@@ -124,3 +124,7 @@
     display: grid;
     place-items: center;
 }
+
+.materias{
+    display: none;
+}

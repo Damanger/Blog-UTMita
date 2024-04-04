@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import sanityClient from '../client';
+import BlockContent from '@sanity/block-content-to-react';
 import '../css/AllPost.css';
 
 const AllPost = () => {
@@ -17,7 +18,8 @@ const AllPost = () => {
                         _id,
                         url
                     }
-                }
+                },
+                body
             }`
         )
         .then(data => setAllPostData(data))
@@ -32,8 +34,9 @@ const AllPost = () => {
     }, [allPostData]);
 
     const filteredPosts = allPostData && allPostData.filter(post =>
-        post.title.toLowerCase().includes(searchText.toLowerCase())
-    );
+        post.title.toLowerCase().includes(searchText.toLowerCase()) || 
+        (typeof post.body === 'object' && JSON.stringify(post.body).toLowerCase().includes(searchText.toLowerCase()))
+    );            
 
     const handleSearchChange = (event) => {
         const text = event.target.value;
@@ -67,6 +70,9 @@ const AllPost = () => {
                                 <Link to={'/' + post.slug.current}>
                                     <h2>{post.title}</h2>
                                 </Link>
+                                <div className='materias'>
+                                    <BlockContent blocks={post.body}/>
+                                </div>
                             </span>
                         </div>
                     </div>
