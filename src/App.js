@@ -10,7 +10,7 @@ const App = () => {
   useEffect(() => {
     setTimeout(() => {
       setIsLoading(false);
-    }, 1250);
+    }, 1000);
   }, []);
   return (
     <BrowserRouter>
