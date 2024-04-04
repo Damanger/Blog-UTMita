@@ -45,7 +45,7 @@ const AllPost = () => {
 
     return (
         <>
-            <h1 style={{display:'flex', justifyContent:'center'}}>Aseorías UTeMitas</h1>
+            <h1 style={{display:'flex', justifyContent:'center', marginTop:'5rem'}}>Aseorías UTeMitas</h1>
             <h2 style={{display:'flex', justifyContent:'center'}}>Tutores UTeMitas</h2>
             <div className="input-wrapper">
                 <input

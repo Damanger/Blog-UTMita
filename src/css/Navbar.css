@@ -1,0 +1,44 @@
+.cabecera{
+    background: linear-gradient(to right, #4E5A8A, #161927);
+    height: 2.8rem;
+    border-radius: 25px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100;
+}
+
+.navbar-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    height: 2.8rem;
+}
+
+.navbar-nav-link {
+    text-decoration: none;
+    color: inherit;
+    display: inline-flex;
+    margin-left: 2rem;
+}
+
+@media (max-width: 430px) {
+    .navbar-nav-link h4 {
+        width: 8rem;
+        font-size: 0.75rem;
+        margin-left: -1rem;
+    }
+    .navbar-right-links{
+        font-size: 0.75rem;
+    }
+} 
+
+.navbar-right-links {
+    display: flex;
+    color: aliceblue;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2rem;
+}  

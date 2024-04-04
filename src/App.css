@@ -41,3 +41,14 @@ button::before {
 button:hover::before {
     width: 100%;
 }
+
+.scroll-watcher {
+    background: linear-gradient(to right, #4E5A8A, #282e47);
+    height: 4px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    z-index: 1000;
+    transition: width 0.3s ease;
+}
