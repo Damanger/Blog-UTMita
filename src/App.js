@@ -13,17 +13,6 @@ const App = () => {
       setIsLoading(false);
     }, 1000);
   }, []);
-
-  useEffect(() => {
-    window.addEventListener('scroll', () => {
-        const scrollTop = window.scrollY;
-        const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-        const scrolled = (scrollTop / scrollHeight) * 100;
-
-        const scrollWatcher = document.querySelector('.scroll-watcher');
-        scrollWatcher.style.width = scrolled + '%';
-    });
-}, []);
   return (
     <BrowserRouter>
     {isLoading ? (
@@ -31,7 +20,6 @@ const App = () => {
       ) : (
         <>
         <Navbar/>
-        <div className="scroll-watcher"></div>
           <Routes>
             <Route Component={AllPosts} path='/' exact/>
             <Route Component={OnePost} path='/:slug' exact/>
