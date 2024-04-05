@@ -72,7 +72,7 @@ const AllPost = () => {
                         <div className="card">
                             <div className="image">
                                 <Link to={'/' + post.slug.current}>
-                                    <img src={post.mainImage.asset.url} alt='UTMita' width="160" height="auto" className="post-image" />
+                                    <img src={post.mainImage.asset.url} style={{borderRadius:'50%', objectFit:'cover'}} alt='UTMita' width="160" height="160" className="post-image" />
                                 </Link>
                             </div>
                             <span className="title">
