@@ -7,6 +7,14 @@ import '../css/AllPost.css';
 const AllPost = () => {
     const [allPostData, setAllPostData] = useState(null);
     const [searchText, setSearchText] = useState('');
+    const [placeholderIndex, setPlaceholderIndex] = useState(0);
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            setPlaceholderIndex((prevIndex) => (prevIndex + 1) % 3);
+        }, 2000);
+        return () => clearInterval(intervalId);
+    }, []);
 
     useEffect(() => {
         sanityClient.fetch(
@@ -33,6 +41,8 @@ const AllPost = () => {
         });
     }, [allPostData]);
 
+    const placeholders = ['Buscar', 'Materias', 'Cursos'];
+
     const filteredPosts = allPostData && allPostData.filter(post =>
         post.title.toLowerCase().includes(searchText.toLowerCase()) || 
         (typeof post.body === 'object' && JSON.stringify(post.body).toLowerCase().includes(searchText.toLowerCase()))
@@ -51,7 +61,7 @@ const AllPost = () => {
                     type="text"
                     name="text"
                     className="input"
-                    placeholder='Buscar'
+                    placeholder={placeholders[placeholderIndex]}
                     value={searchText}
                     onChange={handleSearchChange}
                 />
