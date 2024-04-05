@@ -140,3 +140,8 @@
 .materias{
     display: none;
 }
+
+hr{
+    border-color: black;
+    border-width: 1px;
+}

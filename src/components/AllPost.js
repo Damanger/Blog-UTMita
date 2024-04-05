@@ -66,6 +66,7 @@ const AllPost = () => {
                     onChange={handleSearchChange}
                 />
             </div>
+            <hr/>
             <div className="grid-container" >
                 {filteredPosts && filteredPosts.map((post) => (
                     <div key={post.slug.current} className="grid-item">
