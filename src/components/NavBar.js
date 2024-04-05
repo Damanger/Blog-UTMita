@@ -20,7 +20,7 @@ export default function Navbar(){
         <header className="cabecera">
             <nav className='navbar-nav'>
                 <NavLink to='/' className='navbar-nav-link'>
-                    <h4>Universidad Tecnológica de la Mixteca</h4>
+                    <h2>Aseorías UTeMitas</h2>
                 </NavLink>
                 <div className='navbar-right-links'>
                     <NavLink to='/' activeclassname="activo" className='navbar-nav-link' style={location.pathname === "/" ? activeStyle : {}}>

@@ -29,6 +29,12 @@
     }
 }
 
+.tituloTutores{
+    display: flex;
+    padding-Top: 5rem;
+    padding-Left: 3rem;
+}
+
 .post-image {
     transition: transform 0.6s ease;
     margin: 0 auto;
@@ -54,6 +60,10 @@
     .input-wrapper{
         justify-content: center !important;
         margin-right: 0 !important;
+    }
+    .tituloTutores{
+        justify-content: center !important;
+        padding-left: 0 !important;
     }
 }
 
