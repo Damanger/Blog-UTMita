@@ -25,3 +25,13 @@ button {
     z-index: 1;
     overflow: hidden;
 }
+
+::-webkit-scrollbar{
+    width: 0.1rem;
+    background-color: black;
+}
+
+::-webkit-scrollbar-thumb{
+    background: linear-gradient(black, #006aff);
+    border-radius: 0.1rem;
+}
