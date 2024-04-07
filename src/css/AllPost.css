@@ -73,6 +73,12 @@
     .post-image:hover {
         transform: none;
     }
+    .input-wrapper{
+        left: 50%;
+        right: 50%;
+        transform: translate(-50%,-50%);
+        margin-left: -7.5rem;
+    }
     .title-container {
         display: flex;
         flex-direction: column;
