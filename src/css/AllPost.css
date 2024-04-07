@@ -73,9 +73,6 @@
     .post-image:hover {
         transform: none;
     }
-    .input-wrapper{
-        left:1rem;
-    }
     .title-container {
         display: flex;
         flex-direction: column;
