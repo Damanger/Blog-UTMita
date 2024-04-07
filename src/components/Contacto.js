@@ -48,7 +48,7 @@ export default function Contacto() {
                 <input type="file" id="file-upload" accept="image/*" onChange={updateFileName} />
                 {imagePreview && <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />}
                 <span>{fileName ? `Credencial UTM: ${fileName}` : "Seleccione un archivo"}</span>
-                <textarea placeholder="Materias o cursos que puedo impartir"></textarea>
+                <textarea style={{color:'black'}} placeholder="Materias o cursos que puedo impartir"></textarea>
                 <button>Enviar</button>
             </form>
         </div>
