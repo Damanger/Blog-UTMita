@@ -106,8 +106,8 @@ const AllPost = () => {
                             <div style={{ display: 'flex', justifyContent: 'center'}}>
                                 <form className="form">
                                     <div className="title">Quiero dar clases</div>
-                                    <input type="text" placeholder="Nombre completo" />
-                                    <select value={carrera} onChange={(e) => setCarrera(e.target.value)}>
+                                    <input required type="text" placeholder="Nombre completo" />
+                                    <select required value={carrera} onChange={(e) => setCarrera(e.target.value)}>
                                         <option value="" disabled defaultValue>Seleccione su carrera</option>
                                         <option value="Ing. Computación">Ing. Computación</option>
                                         <option value="Ing. Alimentos">Ing. Alimentos</option>
@@ -121,12 +121,12 @@ const AllPost = () => {
                                         <option value="Lic. Matemáticas Aplicadas">Lic. Matemáticas Aplicadas</option>
                                     </select>
                                     <input type="number" placeholder="Teléfono" />
-                                    <input type="email" placeholder="Correo" />
-                                    <label htmlFor="file-upload" style={{color:'black'}}>Credencial UTM:</label>
-                                    <input type="file" id="file-upload" accept="image/*" onChange={updateFileName} />
+                                    <input required type="email" placeholder="Correo" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx"/>
+                                    <label required htmlFor="file-upload" style={{color:'black'}}>Credencial UTM:</label>
+                                    <input required type="file" id="file-upload" accept="image/*" onChange={updateFileName} />
                                     {imagePreview && <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />}
                                     <span>{fileName ? `Credencial UTM: ${fileName}` : "Seleccione un archivo"}</span>
-                                    <textarea style={{color:'black'}} placeholder="Materias o cursos que puedo impartir"></textarea>
+                                    <textarea required style={{color:'black'}} placeholder="Materias o cursos que puedo impartir"></textarea>
                                     <button>Enviar</button>
                                 </form>
                             </div>

@@ -265,3 +265,7 @@ hr{
     padding: 8px 14px;
     border: 1px solid rgb(219, 213, 213);
 }
+
+select option{
+    color: #000;
+}
