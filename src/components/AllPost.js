@@ -111,7 +111,7 @@ const AllPost = () => {
             name: event.target.elements["full-name-input"].value,
             email: event.target.elements["email-input"].value,
             phoneNumber: event.target.elements["phone-number-input"].value,
-            subject: 'Quiero dar cursos/materias',
+            subject: 'Quiero dar cursos/materias de',
             message: event.target.elements["textarea"].value,
             carrera: carrera
         };
@@ -141,7 +141,8 @@ const AllPost = () => {
             Swal.fire(
                 'Email sent!',
                 '¡Tu e-mail se envió correctamente!',
-                'success'
+                'success',
+                closeModal()
             );
         }, function(error) {
             Swal.fire({
