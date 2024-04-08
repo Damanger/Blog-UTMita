@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import sanityClient from '../client';
 import BlockContent from '@sanity/block-content-to-react';
+import Swal from 'sweetalert2';
+import emailjs from 'emailjs-com';
 import '../css/AllPost.css';
 
 const AllPost = () => {
@@ -74,6 +76,8 @@ const AllPost = () => {
     const [imagePreview, setImagePreview] = useState(null);
     const [carrera, setCarrera] = useState("");
 
+    const formRef = useRef(null);
+
     function updateFileName(event) {
         const file = event.target.files[0];
         if (file && file.type.startsWith("image/")) {
@@ -85,12 +89,68 @@ const AllPost = () => {
             };
             reader.readAsDataURL(file);
         } else {
-            alert("Por favor, seleccione un archivo de imagen.");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Por favor, seleccione un archivo de imagen!'
+            });
             event.target.value = "";
             setFileName("");
             setImagePreview(null);
         }
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Inicializa EmailJS con tu clave pública
+        emailjs.init('1wQ5hcO2lkSg1UWH6');
+
+        // Obtén los valores de los campos del formulario
+        const formData = {
+            name: event.target.elements["full-name-input"].value,
+            email: event.target.elements["email-input"].value,
+            phoneNumber: event.target.elements["phone-number-input"].value,
+            subject: 'Quiero dar cursos/materias',
+            message: event.target.elements["textarea"].value,
+            carrera: carrera
+        };
+
+        const file = event.target.elements["file-upload"].files[0];
+
+        // Verificar si se ingresó un número de teléfono
+        const phoneNumberValue = formData.phoneNumber ? formData.phoneNumber : 'No dejó número';
+
+        // Crear objeto FormData para adjuntar el archivo
+        const formDataWithFile = new FormData();
+
+        formDataWithFile.append("name", formData.name);
+        formDataWithFile.append("email", formData.email);
+        formDataWithFile.append("phoneNumber", phoneNumberValue);
+        formDataWithFile.append("subject", formData.subject);
+        formDataWithFile.append("message", formData.message);
+        formDataWithFile.append("carrera", formData.carrera);
+        formDataWithFile.append("file", file);
+
+        // Envía el formulario a través de EmailJS
+        emailjs.send("service_7ac3amo", "template_1ngo741", {
+            from_name: 'Nombre: ' + formData.name + '\nE-mail: ' + formData.email + '\nCarrera:' + formData.carrera + '\nNúmero de teléfono: ' + phoneNumberValue  + '\nAsunto: ' + formData.subject,
+            message: '\nMaterias:' + formData.message //FALTA AGREGAR LA IMAGEN
+        })
+        .then(function(response) {
+            Swal.fire(
+                'Email sent!',
+                '¡Tu e-mail se envió correctamente!',
+                'success'
+            );
+        }, function(error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: '¡Algo salió mal, tu e-mail no se pudo enviar!'
+            });
+        });
+    };
 
     return (
         <>
@@ -104,9 +164,9 @@ const AllPost = () => {
                         <span className="close" onClick={closeModal}>&times;</span>
                         <div className="modal-content">
                             <div style={{ display: 'flex', justifyContent: 'center'}}>
-                                <form className="form">
+                                <form ref={formRef} className="form" onSubmit={handleSubmit}>
                                     <div className="title">Quiero dar clases</div>
-                                    <input required type="text" placeholder="Nombre completo" />
+                                    <input required type="text" id="full-name-input" pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,})?(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}){1,2}$" autoComplete="off" placeholder="Nombre completo" />
                                     <select required value={carrera} onChange={(e) => setCarrera(e.target.value)}>
                                         <option value="" disabled defaultValue>Seleccione su carrera</option>
                                         <option value="Ing. Computación">Ing. Computación</option>
@@ -120,14 +180,14 @@ const AllPost = () => {
                                         <option value="Lic. Ciencias Empresariales">Lic. Ciencias Empresariales</option>
                                         <option value="Lic. Matemáticas Aplicadas">Lic. Matemáticas Aplicadas</option>
                                     </select>
-                                    <input type="number" placeholder="Teléfono" />
-                                    <input required type="email" placeholder="Correo" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx"/>
+                                    <input type="number" id="phone-number-input" autoComplete="off" placeholder="Teléfono" />
+                                    <input required id="email-input" type="email" placeholder="Correo" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx" autoComplete="off"/>
                                     <label required htmlFor="file-upload" style={{color:'black'}}>Credencial UTM:</label>
                                     <input required type="file" id="file-upload" accept="image/*" onChange={updateFileName} />
                                     {imagePreview && <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />}
                                     <span>{fileName ? `Credencial UTM: ${fileName}` : "Seleccione un archivo"}</span>
-                                    <textarea required style={{color:'black'}} placeholder="Materias o cursos que puedo impartir"></textarea>
-                                    <button>Enviar</button>
+                                    <textarea required id="textarea" cols="30" rows="10" style={{color:'black'}} placeholder="Materias o cursos que puedo impartir" autoComplete="off"></textarea>
+                                    <button type="submit" aria-label="Submit">Enviar</button>
                                 </form>
                             </div>
                         </div>
