@@ -36,7 +36,12 @@
     width: 90% !important;
 }
 
+.form option
+{
+    color:  black;
+}
 .form textarea {
+    color: black;
     border-radius: 8px;
     height: 100px;
     width: 80%;
