@@ -103,7 +103,7 @@ const Contacto = () =>{
                                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder='  Correo electrónico' id='Correo' className="input" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx" autoComplete="off" required/>
                             </div>
                             <div className="input-container">
-                                <input type="number" name="phone" value={formData.phoneNumber} onChange={handleChange} placeholder='  Teléfono' id='Telefono' className="input" autoComplete="off"/>
+                                <input type="number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder='  Teléfono' id='Telefono' className="input" autoComplete="off"/>
                             </div>
                             <div className="input-container textarea">
                                 <textarea name="message" value={formData.message} onChange={handleChange} placeholder='  Escriba su mensaje' className="input" required/>
