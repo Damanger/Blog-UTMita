@@ -107,25 +107,25 @@
     margin-bottom: 2rem;
 }
 
-.input {
+.inputBuscar {
     border-style: none;
     padding: 10px;
     outline: none;
     text-align: center;
 }
 
-.input::placeholder,
-.input {
+.inputBuscar::placeholder,
+.inputBuscar {
     font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
         "Lucida Sans", Arial, sans-serif;
     font-size: 17px;
 }
 
-.input::placeholder {
+.inputBuscar::placeholder {
     color: #8f8f8f;
 }
 
-.input, .input:focus {
+.inputBuscar, .inputBuscar:focus {
     box-shadow: none;
     width: 12rem;
     border-radius: 0px;

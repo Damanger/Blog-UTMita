@@ -176,7 +176,7 @@ const AllPost = () => {
                 <input
                     type="text"
                     name="text"
-                    className="input"
+                    className="inputBuscar"
                     placeholder={placeholders[placeholderIndex]}
                     value={searchText}
                     onChange={handleSearchChange}
