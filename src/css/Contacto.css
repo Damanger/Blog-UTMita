@@ -236,6 +236,10 @@ textarea.input {
     .social-media {
         padding: 1.5rem 0 0 0;
     }
+    .captcha{
+        width: 10rem;
+        contain: content;
+    }
 }
 
 @media (max-width: 480px) {
@@ -283,5 +287,13 @@ textarea.input {
 
     .btn {
         padding: 0.3rem 0.3rem;
+    }
+
+    .captcha{
+        width: 10rem;
+        contain: content;
+    }
+    .contact-info{
+        padding: 0.5rem 0.5rem;
     }
 }

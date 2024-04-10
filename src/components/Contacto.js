@@ -123,7 +123,7 @@ const Contacto = () =>{
                             <div className="input-container textarea">
                                 <textarea maxLength={200} name="message" value={formData.message} onChange={handleChange} placeholder='  Escriba su mensaje' className="input" required/>
                             </div>
-                            <div>
+                            <div className='captcha'>
                                 <ReCAPTCHA required sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
                             </div>
                                 <button type="submit" value="Enviar">Enviar </button>
