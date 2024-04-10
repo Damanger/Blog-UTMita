@@ -73,6 +73,9 @@
   background: #212121;
   border: 2px solid #313131;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .ss:hover,.ss2:hover,.ss3:hover,.ss4:hover {
@@ -99,4 +102,35 @@
     "ss"
     "ss4";
   }
+}
+
+.icon{
+  text-align: center;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.icon span{
+  display: block;
+  height: 3.75rem;
+  width: 3.75rem;
+  background: transparent;
+  border-radius: 50%;
+  position: relative;
+  line-height: 3.75rem;
+  font-size: 1.563rem;
+  margin: 0.5rem;
+}
+
+.whats span{
+  background: #14de36;
+  border-radius: 50%;
+}
+
+.mail span{
+  background: #167fcf;
+  border-radius: 50%;
 }

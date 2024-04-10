@@ -4,6 +4,8 @@ import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
+import { faWhatsapp, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/OnePost.css';
 
 const builder = imageUrlBuilder(sanityClient);
@@ -73,7 +75,14 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss4">
-                
+                <div className="icon">
+                    <a className='whats' href="https://wa.me/5219531233771?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20para%20un%20servicio%20de%20baile%20privado." target="_blank" rel='noreferrer' aria-label="Whatsapp">
+                        <span><FontAwesomeIcon icon={faWhatsapp} /></span>
+                    </a>
+                    <a className='mail' href="sarl021022@gs.utm.mx" aria-label="Correo">
+                        <span><FontAwesomeIcon icon={faTelegramPlane} /></span>
+                    </a>
+                </div>
             </div>
         </div>
     )
