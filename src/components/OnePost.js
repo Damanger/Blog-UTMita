@@ -18,6 +18,8 @@ const OnePost = () => {
     const [postData, setPostData] = useState(null);
     const [showLoader, setShowLoader] = useState(true);
     const { slug } = useParams();
+    const [firstBio, setFirstBio] = useState('');
+    const [secondBio, setSecondBio] = useState('');
 
     useEffect(() => {
         sanityClient.fetch(
@@ -31,11 +33,22 @@ const OnePost = () => {
                     }
                 },
                 body,
-                "name": author->name
+                "name": author->name,
+                "bio": author->bio
             }`,
             { slug }
         )
-        .then(data => setPostData(data[0]))
+        .then(data => {
+            setPostData(data[0]);
+            if(data[0].bio && typeof data[0].bio[0].children[0].text === 'string'){
+                const bioArray = data[0].bio[0].children[0].text.split(' ');
+                console.log(bioArray);
+                setFirstBio(bioArray[0]);
+                setSecondBio(bioArray[1]);
+            }else{
+                console.error('No se encontró la bio');
+            }
+        })
         .catch(err => console.error(err));
     }, [slug]);
 
@@ -99,10 +112,10 @@ const OnePost = () => {
             </div>
             <div className="ss4">
                 <div className="icon">
-                    <a className='whats' href="https://wa.me/5219531233771?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20para%20un%20servicio%20de%20baile%20privado." target="_blank" rel='noreferrer' aria-label="Whatsapp">
+                    <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20para%20un%20servicio%20de%20baile%20privado.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
                         <span><FontAwesomeIcon icon={faWhatsapp} /></span>
                     </a>
-                    <a className='mail' href="mailto:sarl021022@gs.utm.mx" aria-label="Correo">
+                    <a className='mail' href={`mailto:${secondBio}`} aria-label="Correo">
                         <span><FontAwesomeIcon icon={faTelegramPlane} /></span>
                     </a>
                 </div>
