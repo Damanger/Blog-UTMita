@@ -41,12 +41,7 @@ const OnePost = () => {
     if (!postData || !postData.title) {
         return( 
         <>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', textAlign: 'center', fontSize: '2rem' }}>
-                <div>Estamos contactando UTMitas para dar asesorías</div>
-                <div>
-                    <button><Link to="/" style={{ textDecoration: "none" }}>Regresar a la página principal</Link></button>
-                </div>
-            </div>
+            
         </>);
     }
 

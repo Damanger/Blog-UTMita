@@ -110,19 +110,21 @@ const Contacto = () =>{
                         <form className='formContacto' onSubmit={handleSubmit}>
                             <h2 className="titleContacto">Envía un correo</h2>
                             <div className="input-container">
-                                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder='  Nombre' id='Nombre' className="input" pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,})?(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}){1,2}$" autoComplete="off" required/>
+                                <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder='  Nombre completo' id='Nombre' className="input" pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,})?(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}){1,2}$" autoComplete="off" required/>
                             </div>
                             <div className="input-container">
                                 <input type="email" name="email" value={formData.email} onChange={handleChange} placeholder='  Correo electrónico' id='Correo' className="input" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx" autoComplete="off" required/>
                             </div>
                             <div className="input-container">
-                                <input type="number" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} placeholder='  Teléfono' id='Telefono' className="input" autoComplete="off"/>
+                                <input type="tel" name="phoneNumber" value={formData.phoneNumber} onChange={handleChange} maxLength={10} placeholder='  Teléfono' id='Telefono' className="input" autoComplete="off"
+                                    pattern='[0-9]{0,10}' title="Por favor, introduce un número de teléfono válido (10 dígitos)" inputMode="numeric" onInput={(e) => {
+                                    e.target.value = e.target.value.replace(/[^0-9]/g, ''); }}/>
                             </div>
                             <div className="input-container textarea">
-                                <textarea name="message" value={formData.message} onChange={handleChange} placeholder='  Escriba su mensaje' className="input" required/>
+                                <textarea maxLength={200} name="message" value={formData.message} onChange={handleChange} placeholder='  Escriba su mensaje' className="input" required/>
                             </div>
                             <div>
-                                <ReCAPTCHA sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
+                                <ReCAPTCHA required sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
                             </div>
                                 <button type="submit" value="Enviar">Enviar </button>
                         </form>

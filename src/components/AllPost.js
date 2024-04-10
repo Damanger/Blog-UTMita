@@ -170,13 +170,16 @@ const AllPost = () => {
                                         <option value="Lic. Ciencias Empresariales">Lic. Ciencias Empresariales</option>
                                         <option value="Lic. Matemáticas Aplicadas">Lic. Matemáticas Aplicadas</option>
                                     </select>
-                                    <input type="number" id="phone-number-input" autoComplete="off" placeholder="Teléfono" />
+                                    <input type="tel" id="phone-number-input" autoComplete="off" placeholder="Teléfono" maxLength={10}
+                                        pattern='[0-9]{0,10}' title="Por favor, introduce un número de teléfono válido (10 dígitos)" inputMode="numeric" onInput={(e) => {
+                                        e.target.value = e.target.value.replace(/[^0-9]/g, '');
+                                    }}/>
                                     <input required id="email-input" type="email" placeholder="Correo" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx" autoComplete="off"/>
                                     <label required style={{color:'black'}}>Credencial UTM:</label>
                                     <input required type="text" id="input-img-credencial" placeholder='Link de una foto de tu credencial UTM'/>
                                     <label required style={{color:'black'}}>Foto:</label>
                                     <input required type="text" id="input-img-tu" placeholder='Link de una foto tuya para la página'/>
-                                    <textarea required id="textarea" cols="30" rows="10" style={{color:'black'}} placeholder="Materias o cursos que puedo impartir" autoComplete="off"></textarea>
+                                    <textarea required maxLength={200} id="textarea" cols="30" rows="10" style={{color:'black'}} placeholder="Materias o cursos que puedo impartir" autoComplete="off"></textarea>
                                     <div>
                                         <ReCAPTCHA sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
                                     </div>
