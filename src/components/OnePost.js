@@ -49,7 +49,7 @@ const OnePost = () => {
     }
 
     return (
-        <div className='container23'>
+        <div className='container23' style={{ animation: 'fadeIn 1s ease-in' }}>
             <div className="ss2">
                 <h1 style={{display:'flex', justifyContent:'center', alignContent:'center'}}>{postData.title}</h1>
                 <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
