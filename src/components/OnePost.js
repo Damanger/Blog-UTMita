@@ -49,22 +49,31 @@ const OnePost = () => {
     }
 
     return (
-        <div className='Tutor'>
-            <h1 style={{display:'flex', justifyContent:'center', paddingTop:'5rem'}}>{postData.title}</h1>
-            <div style={{display:'flex', justifyContent:'center'}}>
+        <div className='container23'>
+            <div className="ss2">
+                <h1 style={{display:'flex', justifyContent:'center', alignContent:'center'}}>{postData.title}</h1>
+                <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
+                    <Link to="/" style={{ textDecoration: "none"}}>
+                        <button>Regresar</button>
+                    </Link>
+                </div>
+            </div>
+            <div className="ss3">
+                <div style={{display:'flex', justifyContent:'center'}}>
+                <img src={urlFor(postData.mainImage).url()} style={{ objectFit:'cover'}}  alt='Imagen_UTMita' width="250" height="250"/>
+                </div>
+                <div style={{display:'flex', justifyContent:'center'}}>
                 <h2>{postData.name}</h2>
+                </div>
             </div>
-            <div style={{display:'flex', justifyContent:'center'}}>
-                <img src={urlFor(postData.mainImage).url()} alt='Imagen_UTMita' width="160" height="auto"/>
+            <div className="ss">
+                <h3 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>Materias o cursos que puedo impartir:</h3>
+                <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
+                    <BlockContent blocks={postData.body} />
+                </div>
             </div>
-            <h3 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>Materias o cursos que puedo impartir:</h3>
-            <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
-                <BlockContent blocks={postData.body} />
-            </div>
-            <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
-                <Link to="/" style={{ textDecoration: "none"}}>
-                    <button>Regresar</button>
-                </Link>
+            <div className="ss4">
+                
             </div>
         </div>
     )
