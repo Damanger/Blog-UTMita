@@ -6,12 +6,17 @@ import Swal from 'sweetalert2';
 import emailjs from 'emailjs-com';
 import '../css/AllPost.css';
 
+import ReCAPTCHA from 'react-google-recaptcha';
 const AllPost = () => {
     const [allPostData, setAllPostData] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [placeholderIndex, setPlaceholderIndex] = useState(0);
     const [modalOpen, setModalOpen] = useState(false);
+    const [captcha, setCaptcha] = useState(null);
 
+    const handleCaptcha = value => {
+        setCaptcha(value);
+    };
     useEffect(() => {
         const intervalId = setInterval(() => {
             setPlaceholderIndex((prevIndex) => (prevIndex + 1) % 3);
@@ -78,7 +83,14 @@ const AllPost = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        if (!captcha) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Por favor, completa el captcha',
+                text: 'Para enviar el formulario, necesitas completar el captcha.',
+            });
+            return; // Detiene la ejecución de la función si el captcha no está completo
+        }
         // Inicializa EmailJS con tu clave pública
         emailjs.init('1wQ5hcO2lkSg1UWH6');
 
@@ -165,6 +177,9 @@ const AllPost = () => {
                                     <label required style={{color:'black'}}>Foto:</label>
                                     <input required type="text" id="input-img-tu" placeholder='Link de una foto tuya para la página'/>
                                     <textarea required id="textarea" cols="30" rows="10" style={{color:'black'}} placeholder="Materias o cursos que puedo impartir" autoComplete="off"></textarea>
+                                    <div>
+                                        <ReCAPTCHA sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
+                                    </div>
                                     <button type="submit" aria-label="Submit">Enviar</button>
                                 </form>
                             </div>

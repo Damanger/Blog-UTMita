@@ -2,8 +2,14 @@ import React, { useState } from 'react';
 import '../css/Contacto.css'
 import emailjs from 'emailjs-com';
 import Swal from 'sweetalert2';
-
+import ReCAPTCHA from 'react-google-recaptcha';
 const Contacto = () =>{
+    const [captcha, setCaptcha] = useState(null);
+
+    const handleCaptcha = value => {
+        setCaptcha(value);
+    };
+
 
     const [formData, setFormData] = useState({
         name: '',
@@ -14,7 +20,14 @@ const Contacto = () =>{
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
+        if (!captcha) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Por favor, completa el captcha',
+                text: 'Para enviar el formulario, necesitas completar el captcha.',
+            });
+            return; // Detiene la ejecución de la función si el captcha no está completo
+        }
         // Inicializa EmailJS con tu clave pública
         emailjs.init('1wQ5hcO2lkSg1UWH6');
 
@@ -107,6 +120,9 @@ const Contacto = () =>{
                             </div>
                             <div className="input-container textarea">
                                 <textarea name="message" value={formData.message} onChange={handleChange} placeholder='  Escriba su mensaje' className="input" required/>
+                            </div>
+                            <div>
+                                <ReCAPTCHA sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
                             </div>
                                 <button type="submit" value="Enviar">Enviar </button>
                         </form>
