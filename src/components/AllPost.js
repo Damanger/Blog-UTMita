@@ -72,33 +72,9 @@ const AllPost = () => {
         }
     };
 
-    const [fileName, setFileName] = useState("");
-    const [imagePreview, setImagePreview] = useState(null);
     const [carrera, setCarrera] = useState("");
 
     const formRef = useRef(null);
-
-    function updateFileName(event) {
-        const file = event.target.files[0];
-        if (file && file.type.startsWith("image/")) {
-            const fileName = file.name;
-            setFileName(fileName);
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setImagePreview(reader.result);
-            };
-            reader.readAsDataURL(file);
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Por favor, seleccione un archivo de imagen!'
-            });
-            event.target.value = "";
-            setFileName("");
-            setImagePreview(null);
-        }
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -113,10 +89,10 @@ const AllPost = () => {
             phoneNumber: event.target.elements["phone-number-input"].value,
             subject: 'Quiero dar cursos/materias de',
             message: event.target.elements["textarea"].value,
-            carrera: carrera
+            carrera: carrera,
+            credencial: event.target.elements["input-img-credencial"].value,
+            tu: event.target.elements["input-img-tu"].value
         };
-
-        const file = event.target.elements["file-upload"].files[0];
 
         // Verificar si se ingresó un número de teléfono
         const phoneNumberValue = formData.phoneNumber ? formData.phoneNumber : 'No dejó número';
@@ -130,12 +106,13 @@ const AllPost = () => {
         formDataWithFile.append("subject", formData.subject);
         formDataWithFile.append("message", formData.message);
         formDataWithFile.append("carrera", formData.carrera);
-        formDataWithFile.append("file", file);
+        formDataWithFile.append("credencial", formData.credencial);
+        formDataWithFile.append("tu", formData.tu);
 
         // Envía el formulario a través de EmailJS
         emailjs.send("service_7ac3amo", "template_1ngo741", {
             from_name: 'Nombre: ' + formData.name + '\nE-mail: ' + formData.email + '\nCarrera:' + formData.carrera + '\nNúmero de teléfono: ' + phoneNumberValue  + '\nAsunto: ' + formData.subject,
-            message: '\nMaterias:' + formData.message //FALTA AGREGAR LA IMAGEN
+            message: '\nMaterias:' + formData.message + '\nCredencial:' + formData.credencial + '\nFoto:' + formData.tu
         })
         .then(function(response) {
             Swal.fire(
@@ -165,7 +142,7 @@ const AllPost = () => {
                         <span className="close" onClick={closeModal}>&times;</span>
                         <div className="modal-content">
                             <div style={{ display: 'flex', justifyContent: 'center'}}>
-                                <form ref={formRef} className="form" onSubmit={handleSubmit}>
+                                <form id="myForm" ref={formRef} className="form" onSubmit={handleSubmit} method="post" encType="multipart/form-data">
                                     <div className="title">Quiero dar clases</div>
                                     <input required type="text" id="full-name-input" pattern="^[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,})?(\s[a-zA-ZáéíóúÁÉÍÓÚüÜñÑ]{2,}){1,2}$" autoComplete="off" placeholder="Nombre completo" />
                                     <select required value={carrera} onChange={(e) => setCarrera(e.target.value)}>
@@ -183,10 +160,10 @@ const AllPost = () => {
                                     </select>
                                     <input type="number" id="phone-number-input" autoComplete="off" placeholder="Teléfono" />
                                     <input required id="email-input" type="email" placeholder="Correo" pattern=".+@gs.utm.mx" title="Por favor, introduce un correo válido con el dominio @gs.utm.mx" autoComplete="off"/>
-                                    <label required htmlFor="file-upload" style={{color:'black'}}>Credencial UTM:</label>
-                                    <input required type="file" id="file-upload" accept="image/*" onChange={updateFileName} />
-                                    {imagePreview && <img src={imagePreview} alt="Vista previa" style={{ maxWidth: '100%', maxHeight: '200px', marginTop: '10px' }} />}
-                                    <span>{fileName ? `Credencial UTM: ${fileName}` : "Seleccione un archivo"}</span>
+                                    <label required style={{color:'black'}}>Credencial UTM:</label>
+                                    <input required type="text" id="input-img-credencial" placeholder='Link de una foto de tu credencial UTM'/>
+                                    <label required style={{color:'black'}}>Foto:</label>
+                                    <input required type="text" id="input-img-tu" placeholder='Link de una foto tuya para la página'/>
                                     <textarea required id="textarea" cols="30" rows="10" style={{color:'black'}} placeholder="Materias o cursos que puedo impartir" autoComplete="off"></textarea>
                                     <button type="submit" aria-label="Submit">Enviar</button>
                                 </form>
@@ -199,7 +176,7 @@ const AllPost = () => {
                 <input
                     type="text"
                     name="text"
-                    className="input"
+                    className="inputBuscar"
                     placeholder={placeholders[placeholderIndex]}
                     value={searchText}
                     onChange={handleSearchChange}
