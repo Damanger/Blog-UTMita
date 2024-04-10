@@ -82,6 +82,9 @@ const AllPost = () => {
     const formRef = useRef(null);
 
     const handleSubmit = (event) => {
+        // Inicializa EmailJS con tu clave pública
+        emailjs.init('1wQ5hcO2lkSg1UWH6');
+
         event.preventDefault();
         if (!captcha) {
             Swal.fire({
@@ -91,8 +94,6 @@ const AllPost = () => {
             });
             return; // Detiene la ejecución de la función si el captcha no está completo
         }
-        // Inicializa EmailJS con tu clave pública
-        emailjs.init('1wQ5hcO2lkSg1UWH6');
 
         // Obtén los valores de los campos del formulario
         const formData = {
