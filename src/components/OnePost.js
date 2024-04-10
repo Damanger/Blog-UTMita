@@ -112,7 +112,7 @@ const OnePost = () => {
             </div>
             <div className="ss4">
                 <div className="icon">
-                    <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20para%20un%20servicio%20de%20baile%20privado.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
+                    <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20por%20un%curo/materia.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
                         <span><FontAwesomeIcon icon={faWhatsapp} /></span>
                     </a>
                     <a className='mail' href={`mailto:${secondBio}`} aria-label="Correo">
