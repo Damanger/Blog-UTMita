@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { faWhatsapp, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
-import { faWhatsapp, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import '../css/OnePost.css';
+import '../css/OnePost.css'; // Importa tus estilos generales si es necesario
 
 const builder = imageUrlBuilder(sanityClient);
 
@@ -20,6 +20,9 @@ const OnePost = () => {
     const { slug } = useParams();
     const [firstBio, setFirstBio] = useState('');
     const [secondBio, setSecondBio] = useState('');
+    const [isOpen, setIsOpen] = useState(false);
+    const [rating, setRating] = useState(0);
+    const [comment, setComment] = useState('');
 
     useEffect(() => {
         sanityClient.fetch(
@@ -42,6 +45,7 @@ const OnePost = () => {
             setPostData(data[0]);
             if(data[0].bio && typeof data[0].bio[0].children[0].text === 'string'){
                 const bioArray = data[0].bio[0].children[0].text.split(' ');
+                console.log(bioArray);
                 setFirstBio(bioArray[0]);
                 setSecondBio(bioArray[1]);
             }else{
@@ -58,6 +62,28 @@ const OnePost = () => {
 
         return () => clearTimeout(timer);
     }, []);
+
+    const openModal = () => {
+        setIsOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsOpen(false);
+    };
+
+    const handleStarClick = (value) => {
+        setRating(value);
+    };
+
+    const handleCommentChange = (e) => {
+        setComment(e.target.value);
+    };
+
+    const handleSubmit = () => {
+        console.log('Rating:', rating);
+        console.log('Comment:', comment);
+        closeModal();
+    };
 
     if (showLoader || !postData || !postData.title) {
         return( 
@@ -93,6 +119,7 @@ const OnePost = () => {
                     <Link to="/" style={{ textDecoration: "none"}}>
                         <button>Regresar</button>
                     </Link>
+                    <button onClick={openModal}>Evaluar</button>
                 </div>
             </div>
             <div className="ss3">
@@ -110,7 +137,6 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss4">
-                <h3 style={{textAlign:'center'}}>Contacto:</h3>
                 <div className="icon">
                     <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20por%20un%20curso/materia.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
                         <span><FontAwesomeIcon icon={faWhatsapp} /></span>
@@ -120,9 +146,45 @@ const OnePost = () => {
                     </a>
                 </div>
             </div>
-            <div className="ss5">
-                <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} ></div>  
-            </div>
+            {isOpen && (
+                <div className="modal">
+                    <div className="modal-content">
+                        <span className="close" onClick={closeModal}>&times;</span>
+                        <h2>Vamos a evaluar el curso</h2>
+                        <div className="star-container">
+                            {[...Array(5)].map((_, index) => (
+                                <span
+                                    key={index}
+                                    className={index < rating ? 'star filled' : 'star'}
+                                    onClick={() => handleStarClick(index + 1)}
+                                > 
+
+                                    ★
+                                
+                                </span>
+                            ))}
+                        </div>
+                        <div className="rating-text">
+                            {rating !== 0 && (
+                                <>
+                                    {rating === 1 && <p>Realmente malo</p>}
+                                    {rating === 2 && <p>No lo recomiendo</p>}
+                                    {rating === 3 && <p>Regular</p>}
+                                    {rating === 4 && <p>Muy bien</p>}
+                                    {rating === 5 && <p>Excelente</p>}
+                                </>
+                            )}
+                        </div>
+                        <div className="comment-container">
+                            <label htmlFor="comment" className="comment-label">Deja tus comentarios:</label>
+                            <textarea id="comment" className="comment-textarea" value={comment} onChange={handleCommentChange}></textarea>
+                        </div>
+                        <div className="button-container">
+                            <button onClick={handleSubmit}>Enviar evaluación</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }
