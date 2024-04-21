@@ -97,7 +97,7 @@ const Contacto = () =>{
                         <div className="info">
                             <div className="information">
                                 <img src="email.png" className="icon" alt="" />
-                                <a href="mailto:dummie@gmail.com">dummie@gmail.com</a>
+                                <a href="mailto:camm010130@gs.utm.mx">camm010130@gs.utm.mx</a>
                             </div>
                         </div>
 

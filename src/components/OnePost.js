@@ -42,7 +42,6 @@ const OnePost = () => {
             setPostData(data[0]);
             if(data[0].bio && typeof data[0].bio[0].children[0].text === 'string'){
                 const bioArray = data[0].bio[0].children[0].text.split(' ');
-                console.log(bioArray);
                 setFirstBio(bioArray[0]);
                 setSecondBio(bioArray[1]);
             }else{
@@ -111,16 +110,14 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss4">
-                <div >
-                    <h3 style={{textAlign:'center'}}>Contacto:</h3>
-                    <div className="icon">
-                        <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20por%20un%20curso/materia.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
-                            <span><FontAwesomeIcon icon={faWhatsapp} /></span>
-                        </a>
-                        <a className='mail' href={`mailto:${secondBio}`} aria-label="Correo">
-                            <span><FontAwesomeIcon icon={faTelegramPlane} /></span>
-                        </a>
-                    </div>
+                <h3 style={{textAlign:'center'}}>Contacto:</h3>
+                <div className="icon">
+                    <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20por%20un%20curso/materia.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
+                        <span><FontAwesomeIcon icon={faWhatsapp} /></span>
+                    </a>
+                    <a className='mail' href={`mailto:${secondBio}`} aria-label="Correo">
+                        <span><FontAwesomeIcon icon={faTelegramPlane} /></span>
+                    </a>
                 </div>
             </div>
             <div className="ss5">
