@@ -51,3 +51,25 @@ button {
     width: auto;
     padding: 0 16px;
 }
+
+.rsc-ts-bubble, .rsc-float-button{
+    background-color: #76ABAE !important;
+    color: white !important;
+}
+
+.rsc-os-option-element{
+    background-color: #229c17 !important;
+}
+
+.rsc-header{
+    background-color: #222831 !important;
+}
+
+.rsc-content{
+    background-color: aliceblue !important;
+}
+
+.rsc-header-close-button{
+    background-color: rgb(177, 60, 60) !important;
+    border-radius: 50%;
+}
