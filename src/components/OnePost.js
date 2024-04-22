@@ -153,7 +153,7 @@ const OnePost = () => {
             {isOpen && (
                 <div className="modal-comentarios">
                     <div className="modal-content-comentarios">
-                        <span className="close-comentarios" onClick={closeModal}>&times;</span>
+                        <span className="close-comentarios" onClick={closeModal}>&times; cerrar</span>
                         <h2>Vamos a evaluar el curso</h2>
                         <div className="star-container">
                             {[...Array(5)].map((_, index) => (
