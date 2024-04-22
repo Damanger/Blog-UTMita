@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { faWhatsapp, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
-import '../css/OnePost.css'; // Importa tus estilos generales si es necesario
+import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import '../css/OnePost.css';
 
 const builder = imageUrlBuilder(sanityClient);
 
@@ -23,7 +23,6 @@ const OnePost = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-
     useEffect(() => {
         sanityClient.fetch(
             `*[slug.current == $slug]{
@@ -45,7 +44,6 @@ const OnePost = () => {
             setPostData(data[0]);
             if(data[0].bio && typeof data[0].bio[0].children[0].text === 'string'){
                 const bioArray = data[0].bio[0].children[0].text.split(' ');
-                console.log(bioArray);
                 setFirstBio(bioArray[0]);
                 setSecondBio(bioArray[1]);
             }else{
@@ -62,7 +60,6 @@ const OnePost = () => {
 
         return () => clearTimeout(timer);
     }, []);
-
     const openModal = () => {
         setIsOpen(true);
     };
@@ -84,7 +81,6 @@ const OnePost = () => {
         console.log('Comment:', comment);
         closeModal();
     };
-
     if (showLoader || !postData || !postData.title) {
         return( 
         <>
@@ -141,14 +137,18 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss4">
+                <h3 style={{textAlign:'center'}}>Contacto:</h3>
                 <div className="icon">
+                    <Link className='mail' to="/chat" aria-label="Chat">
+                        <span><FontAwesomeIcon icon={faWeixin} /></span>
+                    </Link>
                     <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20por%20un%20curso/materia.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
                         <span><FontAwesomeIcon icon={faWhatsapp} /></span>
                     </a>
-                    <a className='mail' href={`mailto:${secondBio}`} aria-label="Correo">
-                        <span><FontAwesomeIcon icon={faTelegramPlane} /></span>
-                    </a>
                 </div>
+            </div>
+            <div className="ss5">
+                <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} ></div>  
             </div>
             {isOpen && (
                 <div className="modal">
@@ -190,6 +190,7 @@ const OnePost = () => {
                 </div>
             )}
         </div>
+        
     )
 }
 
