@@ -116,10 +116,14 @@ const OnePost = () => {
             <div className="ss2">
                 <h1 style={{display:'flex', justifyContent:'center', alignContent:'center'}}>{postData.title}</h1>
                 <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
-                    <Link to="/" style={{ textDecoration: "none"}}>
-                        <button>Regresar</button>
-                    </Link>
-                    <button onClick={openModal}>Evaluar</button>
+                    <div >
+                        <Link to="/" style={{ textDecoration: "none"}}>
+                            <button>Regresar</button>
+                        </Link>
+                    </div>
+                    <div style={{marginLeft:"0.4rem"}}>
+                        <button onClick={openModal}>Evaluar</button>    
+                    </div>
                 </div>
             </div>
             <div className="ss3">
