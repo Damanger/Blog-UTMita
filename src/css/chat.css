@@ -1,0 +1,111 @@
+.chatcito {
+    text-align: center;
+}
+
+.todoChat{
+    position: absolute;
+    top: 55%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 75%;
+    height: 60%;
+    background: rgba(255,255,255,.05);
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    overflow-y: auto;
+}
+
+.formChat {
+    position: fixed;
+    bottom: 2rem;
+    display: flex;
+    width: 75%;
+    justify-content: center;
+    align-content: center;
+    font-size: 1rem;
+    text-align: center;
+}
+
+.formChat .enviarChat {
+    background-color: rgb(56, 56, 143);
+}
+
+.inputChat {
+    line-height: 2;
+    width: 100%;
+    font-size: 1rem;
+    background: rgb(58, 58, 58);
+    bottom: 0;
+    color: white;
+    outline: none;
+    border: none;
+}
+
+.enviarChat {
+    background-color: #282c34;
+    border: none;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+    width: 20%;
+    font-size: 1rem;
+}
+
+@media (max-width: 430px) {
+    .enviarChat {
+        width: 40%;
+    }
+} 
+
+.enviarChat:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.sign-in {
+    color: #282c34;
+    background: white;
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+.mensajeChat {
+    max-width: 500px;
+    margin-bottom: 12px;
+    line-height: 24px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+}
+
+.sent {
+    flex-direction: row-reverse;
+}
+
+.sent p {
+    color: white;
+    background: #0b93f6;
+    align-self: flex-end;
+}
+
+.received p {
+    background: #e5e5ea;
+    color: black;
+}
+
+.usuariosChat {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin: 2px 5px;
+}

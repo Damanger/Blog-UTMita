@@ -97,10 +97,10 @@ const OnePost = () => {
             </div>
             <div className="ss3">
                 <div style={{display:'flex', justifyContent:'center'}}>
-                <img src={urlFor(postData.mainImage).url()} style={{ objectFit:'cover'}}  alt='Imagen_UTMita' width="250" height="250"/>
+                    <img src={urlFor(postData.mainImage).url()} style={{ objectFit:'cover', borderRadius:'25px'}} alt='Imagen_UTMita' width="250" height="250"/>
                 </div>
                 <div style={{display:'flex', justifyContent:'center'}}>
-                <h2>{postData.name}</h2>
+                    <h2>{postData.name}</h2>
                 </div>
             </div>
             <div className="ss">
