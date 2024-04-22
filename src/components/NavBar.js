@@ -11,7 +11,9 @@ export default function Navbar(){
             setActiveStyle({ borderBottom: "0.2rem solid white" });
         } else if (location.pathname === "/contacto") {
             setActiveStyle({ borderBottom: "0.2rem solid white" });
-        } else {
+        } else if (location.pathname === "/chat") {
+            setActiveStyle({ borderBottom: "0.2rem solid white" });
+        }else {
             setActiveStyle({});
         }
     }, [location]);
@@ -28,6 +30,9 @@ export default function Navbar(){
                     </NavLink>
                     <NavLink to='/contacto' activeclassname="activo" className='navbar-nav-link' style={location.pathname === "/contacto" ? activeStyle : {}}>
                         Contacto
+                    </NavLink>
+                    <NavLink to='/chat' activeclassname="activo" className='navbar-nav-link' style={location.pathname === "/chat" ? activeStyle : {}}>
+                        Chat
                     </NavLink>
                 </div>
             </nav>

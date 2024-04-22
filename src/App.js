@@ -5,6 +5,7 @@ import { AllPosts, OnePost } from './components';
 import Navbar from './components/NavBar';
 import Contacto from './components/Contacto';
 import ChatBot from 'react-simple-chatbot';
+import Chat from './components/Chat';
 const Cargando = lazy(() => import('./components/Cargando'));
 
 const App = () => {
@@ -163,6 +164,7 @@ const App = () => {
           <Routes>
             <Route Component={AllPosts} path='/' exact/>
             <Route Component={Contacto} path='/contacto' exact/>
+            <Route Component={Chat} path='/chat' exact/>
             <Route Component={OnePost} path='/:slug' exact/>
           </Routes>
         </>
