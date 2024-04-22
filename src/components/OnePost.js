@@ -151,9 +151,9 @@ const OnePost = () => {
                 <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} ></div>  
             </div>
             {isOpen && (
-                <div className="modal">
-                    <div className="modal-content">
-                        <span className="close" onClick={closeModal}>&times;</span>
+                <div className="modal-comentarios">
+                    <div className="modal-content-comentarios">
+                        <span className="close-comentarios" onClick={closeModal}>&times;</span>
                         <h2>Vamos a evaluar el curso</h2>
                         <div className="star-container">
                             {[...Array(5)].map((_, index) => (

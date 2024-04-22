@@ -436,8 +436,9 @@
   }
 }
 
-.modal {
+.modal-comentarios {
   display: flex;
+  background-color: rgba(0, 0, 0, 0.4);
   justify-content: center;
   align-items: center;
   position: fixed;
@@ -447,11 +448,10 @@
   width: 100%;
   height: 100%;
   overflow: auto;
-  background-color: rgba(0, 0, 0, 0.4);
 }
 
-.modal-content {
-  background-color: #fefefe;
+.modal-content-comentarios {
+  background-color: #212121;
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
@@ -459,7 +459,7 @@
   text-align: center; 
 }
 
-.close {
+.close-comentarios {
   color: #aaaaaa;
   position: absolute;
   top: 10px;
