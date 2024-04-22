@@ -208,6 +208,7 @@ hr{
     cursor: pointer;
     font-size: 20px;
     color: #666;
+    z-index: 100;
 }
 
 .close:hover {

@@ -104,13 +104,13 @@ function SignIn() {
     }
 
     return (
-        <button onClick={signInWithGoogle}>Sign in with Google</button>
+        <button onClick={signInWithGoogle}>Iniciar sesión con Google</button>
     )
 }
 
 function SignOut() {
     return auth.currentUser && (
-        <button onClick={() => auth.signOut()}>Sign Out</button>
+        <button onClick={() => auth.signOut()}>Cerrar sesión</button>
     )
 }
 
