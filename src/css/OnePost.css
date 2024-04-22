@@ -447,7 +447,6 @@
   top: 0;
   width: 100%;
   height: 100%;
-  
 }
 
 .modal-content-comentarios {
@@ -497,7 +496,7 @@
 }
 
 .comment-textarea {
-  width: 100%;
+  width: 80%;
   height: 250px; 
   resize: none; 
   font-size: 16px; 
