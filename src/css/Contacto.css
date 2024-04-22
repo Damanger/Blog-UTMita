@@ -56,12 +56,12 @@
 .contact-form:before {
     content: "";
     position: absolute;
-    width: 26px;
-    height: 26px;
+    width: 25px;
+    height: 25px;
     background-color: rgb(26, 80, 188);
     transform: rotate(45deg);
     top: 50px;
-    left: -13px;
+    left: -10px;
 }
 
 .formContacto {
@@ -213,7 +213,7 @@ textarea.input {
     }
 
     .contact-form:before {
-        top: -13px;
+        top: -12px;
         left: initial;
         right: 70px;
     }
@@ -294,5 +294,14 @@ textarea.input {
     }
     .contact-info{
         padding: 0.5rem 0.5rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .contact-info{
+        padding: 0.1rem 0.1rem;
+    }
+    .formContacto {
+        padding: 1.25rem 1.25rem;
     }
 }
