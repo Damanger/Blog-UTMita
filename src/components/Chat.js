@@ -24,7 +24,7 @@ const Chat = () => {
     return (
         <div style={{width:'100vw', height:'100vh', overflow:'hidden'}}>
             <div className='chatcito' style={{marginTop:'3rem'}}>
-                <h1>UTMitas Chat General</h1>
+                <h1>UTeMitas Chat General</h1>
                 <SignOut />
                 {user ? <ChatRoom /> : <SignIn />}
             </div>
