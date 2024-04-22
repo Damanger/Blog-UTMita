@@ -90,7 +90,17 @@ function ChatMessage(props) {
 function SignIn() {
     const signInWithGoogle = () => {
         const provider = new GoogleAuthProvider();
-        signInWithPopup(auth, provider);
+        signInWithPopup(auth, provider)
+        .then((result) => {
+            // Acceso al usuario autenticado
+            const user = result.user;
+            // Acceso al correo electrónico del usuario
+            const email = user.email;
+            console.log("Correo electrónico del usuario:", email);
+        })
+        .catch((error) => {
+            console.error("Error al iniciar sesión con Google:", error);
+        });
     }
 
     return (

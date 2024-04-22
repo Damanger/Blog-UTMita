@@ -4,7 +4,7 @@ import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
-import { faWhatsapp, faTelegramPlane } from '@fortawesome/free-brands-svg-icons';
+import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/OnePost.css';
 
@@ -112,11 +112,11 @@ const OnePost = () => {
             <div className="ss4">
                 <h3 style={{textAlign:'center'}}>Contacto:</h3>
                 <div className="icon">
+                    <Link className='mail' to="/chat" aria-label="Chat">
+                        <span><FontAwesomeIcon icon={faWeixin} /></span>
+                    </Link>
                     <a className='whats' href={`https://wa.me/521${firstBio}?text=Buen%20d%C3%ADa,%20quise%20contactarlo%20por%20un%20curso/materia.`} target="_blank" rel='noreferrer' aria-label="Whatsapp">
                         <span><FontAwesomeIcon icon={faWhatsapp} /></span>
-                    </a>
-                    <a className='mail' href={`mailto:${secondBio}`} aria-label="Correo">
-                        <span><FontAwesomeIcon icon={faTelegramPlane} /></span>
                     </a>
                 </div>
             </div>
