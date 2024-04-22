@@ -438,16 +438,16 @@
 
 .modal-comentarios {
   display: flex;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.75);
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 1;
+  z-index: 999;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  overflow: auto;
+  
 }
 
 .modal-content-comentarios {
@@ -461,9 +461,9 @@
 
 .close-comentarios {
   color: white;
-  position: fixed;
-  top: 10px;
-  right: 10px;
+  position: relative;
+  top: 0;
+  left: 45%;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
@@ -486,7 +486,6 @@
   color: gold;
 }
 
-
 .comment-container {
   margin-bottom: 20px;
 }
@@ -494,24 +493,13 @@
 .comment-label {
   display: block;
   margin-bottom: 10px; 
-}
-
-.comment-textarea {
-  width: 100%;
-  height: 250px; 
-  resize: vertical; 
-}
-
-.comment-label {
-  display: block;
-  margin-bottom: 10px;
   font-size: 20px; 
 }
 
 .comment-textarea {
   width: 100%;
   height: 250px; 
-  resize: vertical;
+  resize: none; 
   font-size: 16px; 
   color: #212121;
 }
@@ -529,7 +517,6 @@
   background-color: #d32f2f; 
 }
 
-
 .submit-button {
   background-color: #4caf50; 
   color: white;
@@ -537,7 +524,6 @@
   border: none;
   cursor: pointer;
 }
-
 
 @media (max-width: 767px) {
   .modal{

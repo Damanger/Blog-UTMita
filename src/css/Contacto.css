@@ -237,7 +237,7 @@ textarea.input {
         padding: 1.5rem 0 0 0;
     }
     .captcha{
-        width: 10rem;
+        width: 20rem;
         contain: content;
     }
 }
@@ -291,7 +291,6 @@ textarea.input {
 
     .captcha{
         width: 10rem;
-        contain: content;
     }
     .contact-info{
         padding: 0.5rem 0.5rem;

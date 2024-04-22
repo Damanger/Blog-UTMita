@@ -76,11 +76,27 @@ const OnePost = () => {
         setComment(e.target.value);
     };
 
+    const handleModalClick = (event) => {
+        if (event.target.classList.contains('modal-comentarios')) {
+            closeModal();
+        }
+    };
+
     const handleSubmit = () => {
         console.log('Rating:', rating);
         console.log('Comment:', comment);
         closeModal();
     };
+
+    useEffect(() => {
+        const body = document.querySelector('body');
+        if (isOpen) {
+            body.style.overflow = 'hidden';
+        } else {
+            body.style.overflow = 'auto';
+        }
+    }, [isOpen]);
+
     if (showLoader || !postData || !postData.title) {
         return( 
         <>
@@ -110,15 +126,12 @@ const OnePost = () => {
     return (
         <div className='container23' style={{ animation: 'fadeIn 1s ease-in' }}>
             <div className="ss2">
-                <h1 style={{display:'flex', justifyContent:'center', alignContent:'center'}}>{postData.title}</h1>
+                <h1 style={{display:'flex', justifyContent:'center', alignContent:'center', textAlign:'center'}}>{postData.title}</h1>
                 <div style={{display:'flex', justifyContent:'center', marginTop: '20px'}}>
                     <div >
                         <Link to="/" style={{ textDecoration: "none"}}>
                             <button>Regresar</button>
                         </Link>
-                    </div>
-                    <div style={{marginLeft:"0.4rem"}}>
-                        <button onClick={openModal}>Evaluar</button>    
                     </div>
                 </div>
             </div>
@@ -136,8 +149,8 @@ const OnePost = () => {
                     <BlockContent blocks={postData.body} />
                 </div>
             </div>
-            <div className="ss4">
-                <h3 style={{textAlign:'center'}}>Contacto:</h3>
+            <div className="ss4" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <h3 style={{ textAlign: 'center', marginBottom: '10px' }}>Contacto:</h3>
                 <div className="icon">
                     <Link className='mail' to="/chat" aria-label="Chat">
                         <span><FontAwesomeIcon icon={faWeixin} /></span>
@@ -148,40 +161,39 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss5">
-                <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} ></div>  
+                <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
+                    <div style={{marginLeft:"0.4rem"}}>
+                        <button onClick={openModal}>Evaluar</button>    
+                    </div>
+                </div>  
             </div>
             {isOpen && (
-                <div className="modal-comentarios">
+                <div className="modal-comentarios" onClick={handleModalClick}>
                     <div className="modal-content-comentarios">
-                        <span className="close-comentarios" onClick={closeModal}>&times; cerrar</span>
+                        <span className="close-comentarios" onClick={closeModal}>&times;</span>
                         <h2>Vamos a evaluar el curso</h2>
                         <div className="star-container">
                             {[...Array(5)].map((_, index) => (
-                                <span
-                                    key={index}
-                                    className={index < rating ? 'star filled' : 'star'}
-                                    onClick={() => handleStarClick(index + 1)}
-                                > 
-
+                                <span key={index} className={index < rating ? 'star filled' : 'star'}
+                                    onClick={() => handleStarClick(index + 1)}> 
                                     ★
-                                
                                 </span>
                             ))}
                         </div>
                         <div className="rating-text">
                             {rating !== 0 && (
                                 <>
-                                    {rating === 1 && <p>Realmente malo</p>}
-                                    {rating === 2 && <p>No lo recomiendo</p>}
+                                    {rating === 1 && <p>No lo recomiendo</p>}
+                                    {rating === 2 && <p>Malo</p>}
                                     {rating === 3 && <p>Regular</p>}
-                                    {rating === 4 && <p>Muy bien</p>}
+                                    {rating === 4 && <p>Muy bueno</p>}
                                     {rating === 5 && <p>Excelente</p>}
                                 </>
                             )}
                         </div>
                         <div className="comment-container">
                             <label htmlFor="comment" className="comment-label">Deja tus comentarios:</label>
-                            <textarea id="comment" className="comment-textarea" value={comment} onChange={handleCommentChange}></textarea>
+                            <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' onChange={handleCommentChange}></textarea>
                         </div>
                         <div className="button-container">
                             <button onClick={handleSubmit}>Enviar evaluación</button>
