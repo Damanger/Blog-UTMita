@@ -1,9 +1,10 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect  } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, onSnapshot, collection, query, where, getDocs, orderBy, limit, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import '../css/chat.css';
 
 const firebaseApp = initializeApp({
@@ -19,14 +20,64 @@ const firebaseApp = initializeApp({
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
-const Chat = () => {
+const Chat = ( ) => {
     const [user] = useAuthState(auth);
+    const [privateChatTabs, setPrivateChatTabs] = useState([]);
+    useEffect(() => {
+        if (user) {
+            const fetchPrivateChatTabs = async () => {
+                if (user.email === 'omar.cruzr97@gmail.com') {
+                    const messagesRef = collection(firestore, 'private_messages');
+                    const q = query(messagesRef, where('recipient', '==', user.email));
+                    const querySnapshot = await getDocs(q);
+                    const senders = new Set();
+                    querySnapshot.forEach((doc) => {
+                        senders.add(doc.data().sender);
+                    });
+                    setPrivateChatTabs(Array.from(senders));
+                }
+            };
+            fetchPrivateChatTabs();
+        }
+    }, [user]);
+
     return (
         <div style={{width:'100vw', height:'100vh', overflow:'hidden'}}>
             <div className='chatcito' style={{marginTop:'3rem'}}>
-                <h1>UTeMitas Chat General</h1>
+                <h1>UTeMitas Chat</h1>
                 <SignOut />
-                {user ? <ChatRoom /> : <SignIn />}
+                {user ? 
+                    <>
+                        <Tabs className='chats'>
+                            <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem' }}>
+                                <Tab className='tabs' style={{ cursor:'pointer', listStyleType:'none' }}>Chat General</Tab>
+                                {user.email === 'omar.cruzr97@gmail.com' ? (
+                                    privateChatTabs.map((sender, index) => (
+                                        <Tab className='tabs' style={{ cursor:'pointer', listStyleType:'none' }} key={index}>{sender}</Tab>
+                                    ))
+                                ) : (
+                                    <Tab className='tabs' style={{ cursor:'pointer', listStyleType:'none' }}>Chat Privado con Omar</Tab>
+                                )}
+                            </TabList>
+                            <TabPanel>
+                                <ChatRoom />
+                            </TabPanel>
+                            {user.email === 'omar.cruzr97@gmail.com' ? (
+                                privateChatTabs.map((sender, index) => (
+                                    <TabPanel key={index}>
+                                        <PrivateChatRoom recipient={sender} />
+                                    </TabPanel>
+                                ))
+                            ) : (
+                                <TabPanel>
+                                    <PrivateChatRoom recipient="omar.cruzr97@gmail.com" />
+                                </TabPanel>
+                            )}
+                        </Tabs>
+                    </>
+                    :
+                    <SignIn />
+                }
             </div>
         </div>
     )
@@ -37,7 +88,17 @@ function ChatRoom() {
     const messagesRef = collection(firestore, 'messages');
     const q = query(messagesRef, orderBy('createdAt'), limit(25));
 
-    const [messages] = useCollectionData(q, { idField: 'id' });
+    const [messages, setMessages] = useState([]);
+    useEffect(() => {
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            // Verifica si el mensaje ya existe en el estado antes de agregarlo
+            const updatedMessages = [...messages, ...newMessages.filter(newMsg => !messages.some(msg => msg.id === newMsg.id))];
+            setMessages(updatedMessages);
+        });
+
+        return () => unsubscribe();
+    }, [messages]);
 
     const [formValue, setFormValue] = useState('');
 
@@ -62,6 +123,68 @@ function ChatRoom() {
             <div className='todoChat'>
                 {messages && messages.map((msg, index) => <ChatMessage key={index} message={msg} />)}
                 <span ref={dummy}></span>
+            </div>
+            <div style={{display:'flex', justifyContent:'center', alignContent:'end'}}>
+                <form className='formChat' onSubmit={sendMessage}>
+                    <input className='inputChat' value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Escribe tu mensaje aquí..." />
+                    <button className='enviarChat' type="submit" disabled={!formValue} style={{display:'flex', justifyContent:'center', alignItems:'center', textAlign:'center'}} >🕊️</button>
+                </form>
+            </div>
+        </>
+    )
+}
+
+function PrivateChatRoom({ recipient }) {
+    const dummy = useRef();
+    const messagesRef = collection(firestore, 'private_messages');
+
+    const [messages, setMessages] = useState([]);
+    useEffect(() => {
+        const currentUserEmail = auth.currentUser.email;
+        const sentMessagesQuery = query(messagesRef, where('sender', '==', currentUserEmail), where('recipient', '==', recipient), orderBy('createdAt', 'asc'));
+        const receivedMessagesQuery = query(messagesRef, where('sender', '==', recipient), where('recipient', '==', currentUserEmail), orderBy('createdAt', 'asc'));
+
+        const unsubscribeSent = onSnapshot(sentMessagesQuery, (snapshot) => {
+            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
+        });
+
+        const unsubscribeReceived = onSnapshot(receivedMessagesQuery, (snapshot) => {
+            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
+        });
+
+        return () => {
+            unsubscribeSent();
+            unsubscribeReceived();
+        };
+    }, [recipient]);
+
+    const [formValue, setFormValue] = useState('');
+
+    const sendMessage = async (e) => {
+        e.preventDefault();
+
+        const { uid, photoURL } = auth.currentUser;
+
+        await addDoc(messagesRef, {
+            text: formValue,
+            createdAt: serverTimestamp(),
+            uid,
+            photoURL,
+            recipient,
+            sender: auth.currentUser.email
+        });
+
+        setFormValue('');
+        dummy.current.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    return (
+        <>
+            <div className='todoChat'>
+                {messages && messages.map((msg, index) => <ChatMessage key={index} message={msg} />)}
+                <div ref={dummy}></div>
             </div>
             <div style={{display:'flex', justifyContent:'center', alignContent:'end'}}>
                 <form className='formChat' onSubmit={sendMessage}>

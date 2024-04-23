@@ -181,8 +181,9 @@ const OnePost = () => {
                 <div style={{display:'flex', justifyContent:'center'}}>
                     <img src={urlFor(postData.mainImage).url()} style={{ objectFit:'cover', borderRadius:'25px'}} alt='Imagen_UTMita' width="250" height="250"/>
                 </div>
-                <div style={{display:'flex', justifyContent:'center'}}>
+                <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     <h2>{postData.name}</h2>
+                    <h3>{secondBio}</h3>
                 </div>
             </div>
             <div className="ss">
@@ -248,7 +249,6 @@ const OnePost = () => {
                 </div>
             )}
         </div>
-        
     )
 }
 
