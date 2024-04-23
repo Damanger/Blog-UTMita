@@ -61,17 +61,17 @@ const Chat = () => {
                         <Tabs className='chats'>
                             <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent:'center', padding:'0' }}>
                                 <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat General</Tab>
+                                {privateChatTabs.length > 2 && currentTab > 0 && (
+                                    <button className="arrow-button" onClick={handlePrevTab}>‹</button>
+                                )}
                                 {user.email === 'omar.cruzr97@gmail.com' ? (
-                                    privateChatTabs.slice(currentTab, currentTab + 3).map((sender, index) => (
+                                    privateChatTabs.slice(currentTab, currentTab + 2).map((sender, index) => (
                                         <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>Chat Privado con {sender}</Tab>
                                     ))
                                 ) : (
                                     <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat Privado con Omar</Tab>
                                 )}
-                                {privateChatTabs.length > 3 && currentTab > 0 && (
-                                    <button className="arrow-button" onClick={handlePrevTab}>‹</button>
-                                )}
-                                {privateChatTabs.length > 3 && currentTab < privateChatTabs.length - 3 && (
+                                {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
                                     <button className="arrow-button" onClick={handleNextTab}>›</button>
                                 )}
                             </TabList>

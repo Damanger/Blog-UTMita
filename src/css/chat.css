@@ -129,9 +129,13 @@
 }
 
 .arrow-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
     background: none;
     border: none;
-    font-size: 1rem;
+    font-size: 2rem;
     cursor: pointer;
     padding: 0.25rem;
 }  
