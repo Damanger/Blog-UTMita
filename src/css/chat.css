@@ -5,7 +5,7 @@
 
 .todoChat{
     position: absolute;
-    top: 55%;
+    top: 62%;
     left: 50%;
     transform: translate(-50%, -50%);
     width: 75%;
@@ -145,15 +145,17 @@
         bottom: 2rem;
     }
     .todoChat{
-        top: 55%;
+        top: 60%;
+        height: 58%;
     }
 }
 
 @media (max-width: 375px) {
     .formChat {
-        bottom: 0rem;
+        bottom: -1rem;
     }
     .todoChat{
-        top: 62%;
+        top: 61%;
+        height: 55%;
     }
 }

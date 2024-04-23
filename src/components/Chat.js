@@ -52,7 +52,7 @@ const Chat = () => {
     };
 
     return (
-        <div style={{width:'100vw', height:'100vh', overflow:'hidden'}}>
+        <div style={{height:'100vh', width:'100vw', overflowX:'hidden'}}>
             <div className='chatcito'>
                 <h1>UTeMitas Chat</h1>
                 <SignOut />
