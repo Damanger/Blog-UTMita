@@ -66,10 +66,10 @@ const Chat = () => {
                                 )}
                                 {user.email === 'omar.cruzr97@gmail.com' ? (
                                     privateChatTabs.slice(currentTab, currentTab + 2).map((sender, index) => (
-                                        <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>Chat Privado con {sender}</Tab>
+                                        <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>{sender}</Tab>
                                     ))
                                 ) : (
-                                    <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat Privado con Omar</Tab>
+                                    <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>🍎 Omar</Tab>
                                 )}
                                 {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
                                     <button className="arrow-button" onClick={handleNextTab}>›</button>
