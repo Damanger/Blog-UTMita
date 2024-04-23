@@ -5,6 +5,7 @@ import { getFirestore, onSnapshot, collection, query, where, getDocs, orderBy, l
 import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
+import PropTypes from 'prop-types';
 import '../css/chat.css';
 
 const firebaseApp = initializeApp({
@@ -19,6 +20,10 @@ const firebaseApp = initializeApp({
 
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
+
+PrivateChatRoom.propTypes = {
+    recipient: PropTypes.string.isRequired,
+};
 
 const Chat = () => {
     const [user] = useAuthState(auth);
@@ -57,47 +62,43 @@ const Chat = () => {
                 <h1>UTeMitas Chat</h1>
                 <SignOut />
                 {user ? 
-                    <>
-                        <Tabs className='chats'>
-                            <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent:'center', padding:'0' }}>
-                                <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat General</Tab>
-                                {privateChatTabs.length > 2 && currentTab > 0 && (
-                                    <button className="arrow-button" onClick={handlePrevTab}>‹</button>
-                                )}
-                                {user.email === 'omar.cruzr97@gmail.com' ? (
-                                    privateChatTabs.slice(currentTab, currentTab + 2).map((sender, index) => (
-                                        <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>{sender}</Tab>
-                                    ))
-                                ) : (
-                                    <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>🍎 Omar</Tab>
-                                )}
-                                {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
-                                    <button className="arrow-button" onClick={handleNextTab}>›</button>
-                                )}
-                            </TabList>
-                            <TabPanel>
-                                <ChatRoom />
-                            </TabPanel>
-                            {user.email === 'omar.cruzr97@gmail.com' ? (
-                                privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
-                                    <TabPanel key={index}>
-                                        <PrivateChatRoom recipient={sender} />
-                                    </TabPanel>
-                                ))
-                            ) : (
-                                <TabPanel>
-                                    <PrivateChatRoom recipient="omar.cruzr97@gmail.com" />
-                                </TabPanel>
-                            )}
-                        </Tabs>
-                    </>
-                    :
-                    <SignIn />
+                    <ChatTabs
+                        privateChatTabs={privateChatTabs}
+                        currentTab={currentTab}
+                        handlePrevTab={handlePrevTab}
+                        handleNextTab={handleNextTab}
+                    />
+                    :<SignIn />
                 }
             </div>
         </div>
     )
 }
+
+const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab }) => (
+    <Tabs className='chats'>
+        <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent: 'center', padding: '0' }}>
+            <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat General</Tab>
+            {privateChatTabs.length > 2 && currentTab > 0 && (
+                <button className="arrow-button" onClick={handlePrevTab}>‹</button>
+            )}
+            {privateChatTabs.map((sender, index) => (
+                <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>{sender}</Tab>
+            ))}
+            {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
+                <button className="arrow-button" onClick={handleNextTab}>›</button>
+            )}
+        </TabList>
+        <TabPanel>
+            <ChatRoom />
+        </TabPanel>
+        {privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
+            <TabPanel key={index}>
+                <PrivateChatRoom recipient={sender} />
+            </TabPanel>
+        ))}
+    </Tabs>
+);
 
 function ChatRoom() {
     const dummy = useRef();
@@ -112,9 +113,9 @@ function ChatRoom() {
             const updatedMessages = [...messages, ...newMessages.filter(newMsg => !messages.some(msg => msg.id === newMsg.id))];
             setMessages(updatedMessages);
         });
-
+    
         return () => unsubscribe();
-    }, [messages]);
+    }, []);
 
     const [formValue, setFormValue] = useState('');
 
@@ -235,10 +236,10 @@ function SignIn() {
             const user = result.user;
             // Acceso al correo electrónico del usuario
             const email = user.email;
-            console.log("Correo electrónico del usuario:", email);
+            console.log("Correo electrónico del usuario: ", email);
         })
         .catch((error) => {
-            console.error("Error al iniciar sesión con Google:", error);
+            console.error("Error al iniciar sesión con Google: ", error);
         });
     }
 
