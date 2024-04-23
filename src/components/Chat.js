@@ -20,7 +20,7 @@ const firebaseApp = initializeApp({
 const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
-const Chat = ( ) => {
+const Chat = () => {
     const [user] = useAuthState(auth);
     const [privateChatTabs, setPrivateChatTabs] = useState([]);
     const [currentTab, setCurrentTab] = useState(0);
@@ -61,27 +61,33 @@ const Chat = ( ) => {
                         <Tabs className='chats'>
                             <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent:'center', padding:'0' }}>
                                 <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat General</Tab>
-                                {user.email === 'omar.cruzr97@gmail.com' && (
-                                    privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
-                                        <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>{sender}</Tab>
+                                {user.email === 'omar.cruzr97@gmail.com' ? (
+                                    privateChatTabs.slice(currentTab, currentTab + 3).map((sender, index) => (
+                                        <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>Chat Privado con {sender}</Tab>
                                     ))
+                                ) : (
+                                    <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat Privado con Omar</Tab>
                                 )}
-                                {privateChatTabs.length > 5 && currentTab > 0 && (
+                                {privateChatTabs.length > 3 && currentTab > 0 && (
                                     <button className="arrow-button" onClick={handlePrevTab}>‹</button>
                                 )}
-                                {privateChatTabs.length > 5 && currentTab < privateChatTabs.length - 5 && (
+                                {privateChatTabs.length > 3 && currentTab < privateChatTabs.length - 3 && (
                                     <button className="arrow-button" onClick={handleNextTab}>›</button>
                                 )}
                             </TabList>
                             <TabPanel>
                                 <ChatRoom />
                             </TabPanel>
-                            {user.email === 'omar.cruzr97@gmail.com' && (
+                            {user.email === 'omar.cruzr97@gmail.com' ? (
                                 privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
                                     <TabPanel key={index}>
                                         <PrivateChatRoom recipient={sender} />
                                     </TabPanel>
                                 ))
+                            ) : (
+                                <TabPanel>
+                                    <PrivateChatRoom recipient="omar.cruzr97@gmail.com" />
+                                </TabPanel>
                             )}
                         </Tabs>
                     </>
