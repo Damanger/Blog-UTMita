@@ -23,6 +23,8 @@ const firestore = getFirestore(firebaseApp);
 const Chat = ( ) => {
     const [user] = useAuthState(auth);
     const [privateChatTabs, setPrivateChatTabs] = useState([]);
+    const [currentTab, setCurrentTab] = useState(0);
+
     useEffect(() => {
         if (user) {
             const fetchPrivateChatTabs = async () => {
@@ -41,37 +43,45 @@ const Chat = ( ) => {
         }
     }, [user]);
 
+    const handlePrevTab = () => {
+        setCurrentTab((prevTab) => prevTab - 1);
+    };
+
+    const handleNextTab = () => {
+        setCurrentTab((prevTab) => prevTab + 1);
+    };
+
     return (
         <div style={{width:'100vw', height:'100vh', overflow:'hidden'}}>
-            <div className='chatcito' style={{marginTop:'3rem'}}>
+            <div className='chatcito'>
                 <h1>UTeMitas Chat</h1>
                 <SignOut />
                 {user ? 
                     <>
                         <Tabs className='chats'>
-                            <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem' }}>
-                                <Tab className='tabs' style={{ cursor:'pointer', listStyleType:'none' }}>Chat General</Tab>
-                                {user.email === 'omar.cruzr97@gmail.com' ? (
-                                    privateChatTabs.map((sender, index) => (
-                                        <Tab className='tabs' style={{ cursor:'pointer', listStyleType:'none' }} key={index}>{sender}</Tab>
+                            <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent:'center', padding:'0' }}>
+                                <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat General</Tab>
+                                {user.email === 'omar.cruzr97@gmail.com' && (
+                                    privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
+                                        <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>{sender}</Tab>
                                     ))
-                                ) : (
-                                    <Tab className='tabs' style={{ cursor:'pointer', listStyleType:'none' }}>Chat Privado con Omar</Tab>
+                                )}
+                                {privateChatTabs.length > 5 && currentTab > 0 && (
+                                    <button className="arrow-button" onClick={handlePrevTab}>‹</button>
+                                )}
+                                {privateChatTabs.length > 5 && currentTab < privateChatTabs.length - 5 && (
+                                    <button className="arrow-button" onClick={handleNextTab}>›</button>
                                 )}
                             </TabList>
                             <TabPanel>
                                 <ChatRoom />
                             </TabPanel>
-                            {user.email === 'omar.cruzr97@gmail.com' ? (
-                                privateChatTabs.map((sender, index) => (
+                            {user.email === 'omar.cruzr97@gmail.com' && (
+                                privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
                                     <TabPanel key={index}>
                                         <PrivateChatRoom recipient={sender} />
                                     </TabPanel>
                                 ))
-                            ) : (
-                                <TabPanel>
-                                    <PrivateChatRoom recipient="omar.cruzr97@gmail.com" />
-                                </TabPanel>
                             )}
                         </Tabs>
                     </>

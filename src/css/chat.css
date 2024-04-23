@@ -1,5 +1,6 @@
 .chatcito {
     text-align: center;
+    margin-top: 3rem;
 }
 
 .todoChat{
@@ -111,7 +112,7 @@
 }
 
 .tabs {
-    padding: 10px 20px;
+    padding: 10px;
     text-transform: uppercase;
     border-radius: 8px;
     font-size: 0.8rem;
@@ -125,4 +126,30 @@
     text-shadow: 0 0 1px #ffffff, 0 0 1px #ffffff, 0 0 5px #ffffff;
     box-shadow: 0 0 1px #008cff, 0 0 1px #008cff, 0 0 5px #008cff,
         0 0 100px #008cff;
+}
+
+.arrow-button {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.25rem;
+}  
+
+@media (max-width: 430px) {
+    .formChat {
+        bottom: 2rem;
+    }
+    .todoChat{
+        top: 55%;
+    }
+}
+
+@media (max-width: 375px) {
+    .formChat {
+        bottom: 0rem;
+    }
+    .todoChat{
+        top: 62%;
+    }
 }
