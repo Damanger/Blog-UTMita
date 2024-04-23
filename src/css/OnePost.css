@@ -89,9 +89,7 @@
   background: #212121;
   border: 2px solid #313131;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ 
 }
 
 .ss:hover,.ss2:hover,.ss3:hover,.ss4:hover, .ss5:hover {
@@ -472,7 +470,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 40px; 
+  margin-bottom: 0.8rem;
+  font-size: 4rem; 
 }
 
 .star {
@@ -529,4 +528,14 @@
     margin-left: 1rem;
     background-color: #212121;
   }
+}
+.comment-container{
+  margin: 0;
+  padding: 0;
+  background-color: #313131;
+}
+
+.comment-text
+{
+  margin-top: -1rem;
 }

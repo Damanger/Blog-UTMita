@@ -1,12 +1,32 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import sanityClient from '../client';
 import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
+import { initializeApp } from 'firebase/app';
+import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where } from 'firebase/firestore';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import '../css/OnePost.css';
+
+
+const firebaseApp = initializeApp({
+    apiKey: "AIzaSyC2e6pQRyw1xME5KBRjR-QSEHP_6eK_duw",
+    authDomain: "utemitas.firebaseapp.com",
+    projectId: "utemitas",
+    storageBucket: "utemitas.appspot.com",
+    messagingSenderId: "155199151252",
+    appId: "1:155199151252:web:57580335c4e0da0be7e881",
+    measurementId: "G-BMNC0H0K3J"
+});
+
+const auth = getAuth(firebaseApp);
+const firestore = getFirestore(firebaseApp);
+
 
 const builder = imageUrlBuilder(sanityClient);
 
@@ -23,6 +43,15 @@ const OnePost = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
+    const emailProfesor = "sarl021022@gs.utm.mx"; // El email del profesor por el cual quieres filtrar
+
+    const dummy = useRef();
+    const comentsRef = collection(firestore, 'coments');
+    const q = query(comentsRef, orderBy('createdAt'), limit(25));
+
+    const [coments] = useCollectionData(q, { idField: 'id' });
+
+
     useEffect(() => {
         sanityClient.fetch(
             `*[slug.current == $slug]{
@@ -51,6 +80,7 @@ const OnePost = () => {
             }
         })
         .catch(err => console.error(err));
+        console.log(secondBio);
     }, [slug]);
 
     useEffect(() => {
@@ -76,15 +106,27 @@ const OnePost = () => {
         setComment(e.target.value);
     };
 
+
     const handleModalClick = (event) => {
         if (event.target.classList.contains('modal-comentarios')) {
             closeModal();
         }
     };
 
+    const sendComment = async (e) => {
+        
+
+        await addDoc(comentsRef, {
+            comment: comment,
+            raiting: rating,
+            asesor_email: secondBio,
+            createdAt: serverTimestamp(),
+            
+        });
+    }
+
     const handleSubmit = () => {
-        console.log('Rating:', rating);
-        console.log('Comment:', comment);
+        sendComment();
         closeModal();
     };
 
@@ -163,9 +205,13 @@ const OnePost = () => {
             <div className="ss5">
                 <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
                     <div style={{marginLeft:"0.4rem"}}>
-                        <button onClick={openModal}>Evaluar</button>    
+                        <button onClick={openModal}>Evaluar</button>
+                        <div className='coments' style={{marginTop:'2rem', width:'auto', fontSize:'1.4rem'}}>
+                            {coments && coments.map((msg, index) => <ComentsFunctionShow key={index} message={msg} emailProfesor={secondBio}/>)}
+                            <span ref={dummy}></span>
+                        </div>
                     </div>
-                </div>  
+                </div>
             </div>
             {isOpen && (
                 <div className="modal-comentarios" onClick={handleModalClick}>
@@ -204,6 +250,35 @@ const OnePost = () => {
         </div>
         
     )
+}
+
+function ComentsFunctionShow(props) {
+    const fullStarColor = "#ffc107"; // Color para estrellas llenas
+    const emptyStarColor = "#e4e5e9"; // Color para estrellas vacías
+    let email_Filter = props.emailProfesor;
+    console.log(email_Filter);
+    const { asesor_email, comment, raiting } = props.message;
+    return (
+        <>
+        <div className="comment-container">
+            <div className="star-container">
+                {[...Array(5)].map((_, index) => (
+                    <span key={index} style={{ color: index < raiting ? fullStarColor : emptyStarColor }}>
+                        ★
+                    </span>
+                ))}
+            </div>
+            <p className='comment-text'>{comment}</p>
+        </div>
+        </>
+    )
+}
+function calculateAverageStars(params) {
+    let average=0;
+    for (let star = 0; star < params.length; star++) {
+       average = params[star] + average; 
+    }
+    return average;
 }
 
 export default OnePost;
