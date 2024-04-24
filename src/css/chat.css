@@ -138,6 +138,10 @@
     font-size: 2rem;
     cursor: pointer;
     padding: 0.25rem;
+} 
+
+.selected-tab {
+    background-color: green !important;
 }  
 
 @media (max-width: 430px) {

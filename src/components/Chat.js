@@ -80,30 +80,37 @@ const Chat = () => {
     )
 }
 
-const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab }) => (
-    <Tabs className='chats'>
-        <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent: 'center', padding: '0' }}>
-            <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }}>Chat General</Tab>
-            {privateChatTabs.length > 2 && currentTab > 0 && (
-                <button className="arrow-button" onClick={handlePrevTab}>‹</button>
-            )}
-            {privateChatTabs.map((sender, index) => (
-                <Tab className='tabs' style={{ cursor: 'pointer', listStyleType: 'none' }} key={index}>{sender}</Tab>
-            ))}
-            {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
-                <button className="arrow-button" onClick={handleNextTab}>›</button>
-            )}
-        </TabList>
-        <TabPanel>
-            <ChatRoom />
-        </TabPanel>
-        {privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
-            <TabPanel key={index}>
-                <PrivateChatRoom recipient={sender} />
+const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab }) => {
+    const [selectedTab, setSelectedTab] = useState(0);
+
+    const handleTabClick = (index) => {
+        setSelectedTab(index);
+    };
+    return (
+        <Tabs className='chats'>
+            <TabList style={{ display: 'flex', flexDirection: 'row', gap: '2rem', justifyContent: 'center', padding: '0' }}>
+                <Tab className={`tabs ${selectedTab === 0 ? 'selected-tab' : ''}`} style={{ cursor: 'pointer', listStyleType: 'none' }} onClick={() => handleTabClick(0)}>Chat General</Tab>
+                {privateChatTabs.length > 2 && currentTab > 0 && (
+                    <button className="arrow-button" onClick={handlePrevTab}>‹</button>
+                )}
+                {privateChatTabs.map((sender, index) => (
+                    <Tab className={`tabs ${selectedTab === index + 1 ? 'selected-tab' : ''}`} style={{ cursor: 'pointer', listStyleType: 'none' }} key={index} onClick={() => handleTabClick(index + 1)}>{sender}</Tab>
+                ))}
+                {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
+                    <button className="arrow-button" onClick={handleNextTab}>›</button>
+                )}
+            </TabList>
+            <TabPanel>
+                <ChatRoom />
             </TabPanel>
-        ))}
-    </Tabs>
-);
+            {privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
+                <TabPanel key={index}>
+                    <PrivateChatRoom recipient={sender} />
+                </TabPanel>
+            ))}
+        </Tabs>
+    );
+};
 
 function ChatRoom() {
     const dummy = useRef();
