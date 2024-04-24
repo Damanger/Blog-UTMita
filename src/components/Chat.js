@@ -164,22 +164,22 @@ function PrivateChatRoom({ recipient }) {
         const currentUserEmail = auth.currentUser.email;
         const sentMessagesQuery = query(messagesRef, where('sender', '==', currentUserEmail), where('recipient', '==', recipient), orderBy('createdAt', 'asc'));
         const receivedMessagesQuery = query(messagesRef, where('sender', '==', recipient), where('recipient', '==', currentUserEmail), orderBy('createdAt', 'asc'));
-    
+
         const unsubscribeSent = onSnapshot(sentMessagesQuery, (snapshot) => {
             const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setMessages(prevMessages => [...newMessages, ...prevMessages]);
+            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
         });
-    
+
         const unsubscribeReceived = onSnapshot(receivedMessagesQuery, (snapshot) => {
             const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setMessages(prevMessages => [...newMessages, ...prevMessages]);
+            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
         });
-    
+
         return () => {
             unsubscribeSent();
             unsubscribeReceived();
         };
-    }, [recipient]);    
+    }, [recipient]);
 
     const [formValue, setFormValue] = useState('');
 
