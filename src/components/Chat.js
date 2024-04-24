@@ -33,7 +33,9 @@ const Chat = () => {
     useEffect(() => {
         if (user) {
             const fetchPrivateChatTabs = async () => {
+                // Verifica si el usuario actual es Omar
                 if (user.email === 'omar.cruzr97@gmail.com') {
+                    // Para Omar, busca los mensajes privados que recibió
                     const messagesRef = collection(firestore, 'private_messages');
                     const q = query(messagesRef, where('recipient', '==', user.email));
                     const querySnapshot = await getDocs(q);
@@ -42,12 +44,15 @@ const Chat = () => {
                         senders.add(doc.data().sender);
                     });
                     setPrivateChatTabs(Array.from(senders));
+                } else {
+                    // Para otros usuarios, solo muestra la pestaña para Omar
+                    setPrivateChatTabs(['omar.cruzr97@gmail.com']);
                 }
             };
             fetchPrivateChatTabs();
         }
     }, [user]);
-
+    
     const handlePrevTab = () => {
         setCurrentTab((prevTab) => prevTab - 1);
     };
@@ -109,31 +114,30 @@ function ChatRoom() {
     useEffect(() => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            // Verifica si el mensaje ya existe en el estado antes de agregarlo
-            const updatedMessages = [...messages, ...newMessages.filter(newMsg => !messages.some(msg => msg.id === newMsg.id))];
-            setMessages(updatedMessages);
+            // Agrega los nuevos mensajes al principio del array de mensajes
+            setMessages(prevMessages => [...newMessages, ...prevMessages]);
         });
     
         return () => unsubscribe();
-    }, []);
+    }, []);    
 
     const [formValue, setFormValue] = useState('');
 
     const sendMessage = async (e) => {
         e.preventDefault();
-
+    
         const { uid, photoURL } = auth.currentUser;
-
+    
         await addDoc(messagesRef, {
             text: formValue,
             createdAt: serverTimestamp(),
             uid,
             photoURL
         });
-
+    
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    }    
 
     return (
         <>
@@ -160,30 +164,30 @@ function PrivateChatRoom({ recipient }) {
         const currentUserEmail = auth.currentUser.email;
         const sentMessagesQuery = query(messagesRef, where('sender', '==', currentUserEmail), where('recipient', '==', recipient), orderBy('createdAt', 'asc'));
         const receivedMessagesQuery = query(messagesRef, where('sender', '==', recipient), where('recipient', '==', currentUserEmail), orderBy('createdAt', 'asc'));
-
+    
         const unsubscribeSent = onSnapshot(sentMessagesQuery, (snapshot) => {
             const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
+            setMessages(prevMessages => [...newMessages, ...prevMessages]);
         });
-
+    
         const unsubscribeReceived = onSnapshot(receivedMessagesQuery, (snapshot) => {
             const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
+            setMessages(prevMessages => [...newMessages, ...prevMessages]);
         });
-
+    
         return () => {
             unsubscribeSent();
             unsubscribeReceived();
         };
-    }, [recipient]);
+    }, [recipient]);    
 
     const [formValue, setFormValue] = useState('');
 
     const sendMessage = async (e) => {
         e.preventDefault();
-
+    
         const { uid, photoURL } = auth.currentUser;
-
+    
         await addDoc(messagesRef, {
             text: formValue,
             createdAt: serverTimestamp(),
@@ -192,10 +196,10 @@ function PrivateChatRoom({ recipient }) {
             recipient,
             sender: auth.currentUser.email
         });
-
+    
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
-    }
+    }    
 
     return (
         <>
