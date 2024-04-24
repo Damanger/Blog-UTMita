@@ -545,8 +545,16 @@
   }
 }
 
-.rdrDateDisplayWrapper{
-  background: linear-gradient(to right, #2645a3, rgb(188, 188, 188));
+.DateRangePickerContainer {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity 0.3s ease-in-out, max-height 0.3s ease-in-out;
+}
+
+.DateRangePickerContainer.active {
+  opacity: 1;
+  max-height: fit-content;
 }
 
 .rdrStaticRange, .rdrDateRangeWrapper{

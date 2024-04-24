@@ -208,6 +208,8 @@ const OnePost = () => {
                     <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
                     </button>
+                </div>
+                <div style={{display:'flex', justifyContent:'center'}} className={`DateRangePickerContainer ${showDatePicker ? 'active' : ''}`}>
                     {showDatePicker && (
                         <DateRangePicker
                             onChange={(ranges) => setDateRange([ranges.selection])}
