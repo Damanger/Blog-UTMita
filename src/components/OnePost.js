@@ -15,6 +15,7 @@ import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import '../css/OnePost.css';
+import { set } from 'date-fns';
 
 
 const firebaseApp = initializeApp({
@@ -43,7 +44,8 @@ const OnePost = () => {
     const { slug } = useParams();
     const [firstBio, setFirstBio] = useState('');
     const [secondBio, setSecondBio] = useState('');
-    const [thridBio, setThridBio] = useState('');
+    const [thirdBio, setThirdBio] = useState('');
+    const [fourhtBio, setFourhtBio] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -86,7 +88,8 @@ const OnePost = () => {
                 const bioArray = data[0].bio[0].children[0].text.split(' ');
                 setFirstBio(bioArray[0]);
                 setSecondBio(bioArray[1]);
-                setThridBio(bioArray[2]);
+                setThirdBio(bioArray[2]);
+                setFourhtBio(bioArray[3]);
             }else{
                 console.error('No se encontró la bio');
             }
@@ -199,7 +202,8 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss">
-                <h2 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>${thridBio}/hra</h2>
+                <h2 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>${thirdBio}/hra</h2>
+                <h3 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>Horarios: {fourhtBio}</h3>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
                     <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
