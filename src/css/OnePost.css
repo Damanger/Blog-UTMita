@@ -539,3 +539,28 @@
 {
   margin-top: -1rem;
 }
+
+@media (max-width: 768px) {
+  .rdrDateRangePickerWrapper{
+    scale: 0.8;
+  }
+}
+
+.rdrDateDisplayWrapper{
+  background: linear-gradient(to right, #2645a3, rgb(188, 188, 188));
+}
+
+.rdrStaticRange, .rdrDateRangeWrapper{
+  background: linear-gradient(to bottom, #2645a3, aliceblue);
+}
+
+.rdrWeekDays, .rdrWeekDay, 
+.rdrMonthPicker > select, 
+.rdrYearPicker > select{
+  color: black !important;
+  font-weight: bolder;
+}
+
+.rdrDefinedRangesWrapper{
+  display: none;
+}

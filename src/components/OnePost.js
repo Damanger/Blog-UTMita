@@ -11,6 +11,9 @@ import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { DateRangePicker } from 'react-date-range';
+import 'react-date-range/dist/styles.css';
+import 'react-date-range/dist/theme/default.css';
 import '../css/OnePost.css';
 
 
@@ -32,7 +35,7 @@ const builder = imageUrlBuilder(sanityClient);
 
 const urlFor = (source) => {
     return builder.image(source);
-}
+}  
 
 const OnePost = () => {
     const [postData, setPostData] = useState(null);
@@ -45,13 +48,20 @@ const OnePost = () => {
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
     const emailProfesor = "sarl021022@gs.utm.mx"; // El email del profesor por el cual quieres filtrar
-
     const dummy = useRef();
     const comentsRef = collection(firestore, 'coments');
     const q = query(comentsRef, orderBy('createdAt'), limit(25));
-
     const [coments] = useCollectionData(q, { idField: 'id' });
+    const [showDatePicker, setShowDatePicker] = useState(false);
+    const [dateRange, setDateRange] = useState([{
+        startDate: new Date(),
+        endDate: null,
+        key: 'selection'
+    }]);
 
+    const handleToggleDatePicker = () => {
+        setShowDatePicker(!showDatePicker);
+    };
 
     useEffect(() => {
         sanityClient.fetch(
@@ -190,6 +200,22 @@ const OnePost = () => {
             </div>
             <div className="ss">
                 <h2 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>${thridBio}/hra</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+                    <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
+                        {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
+                    </button>
+                    {showDatePicker && (
+                        <DateRangePicker
+                            onChange={(ranges) => setDateRange([ranges.selection])}
+                            showSelectionPreview={true}
+                            moveRangeOnFirstSelection={false}
+                            ranges={dateRange}
+                            minDate={new Date()}
+                            editableDateInputs={true}
+                            rangeColors={["#007bff"]}
+                        />
+                    )}
+                </div>
                 <h3 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>Materias o cursos que puedo impartir:</h3>
                 <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
                     <BlockContent blocks={postData.body} />
