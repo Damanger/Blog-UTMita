@@ -40,6 +40,7 @@ const OnePost = () => {
     const { slug } = useParams();
     const [firstBio, setFirstBio] = useState('');
     const [secondBio, setSecondBio] = useState('');
+    const [thridBio, setThridBio] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -75,6 +76,7 @@ const OnePost = () => {
                 const bioArray = data[0].bio[0].children[0].text.split(' ');
                 setFirstBio(bioArray[0]);
                 setSecondBio(bioArray[1]);
+                setThridBio(bioArray[2]);
             }else{
                 console.error('No se encontró la bio');
             }
@@ -187,6 +189,7 @@ const OnePost = () => {
                 </div>
             </div>
             <div className="ss">
+                <h2 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>${thridBio}/hra</h2>
                 <h3 style={{display:'flex', justifyContent:'center', textAlign:'center'}}>Materias o cursos que puedo impartir:</h3>
                 <div style={{display:'flex', justifyContent:'center', textAlign:'center'}} >
                     <BlockContent blocks={postData.body} />
@@ -276,7 +279,7 @@ function ComentsFunctionShow(props) {
 function calculateAverageStars(params) {
     let average=0;
     for (let star = 0; star < params.length; star++) {
-       average = params[star] + average; 
+        average = params[star] + average; 
     }
     return average;
 }
