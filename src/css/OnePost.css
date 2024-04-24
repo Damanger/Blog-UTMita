@@ -89,7 +89,6 @@
   background: #212121;
   border: 2px solid #313131;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
- 
 }
 
 .ss:hover,.ss2:hover,.ss3:hover,.ss4:hover, .ss5:hover {

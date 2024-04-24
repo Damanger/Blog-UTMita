@@ -57,6 +57,10 @@
     border-radius: 5px;
 }
 
+.post-image:hover{
+    box-shadow: 0 0 40px rgba(9, 117, 241, 1);
+}
+
 @media (max-width: 1024px) {
     .grid-container {
         grid-template-columns: repeat(3, 1fr);
