@@ -156,30 +156,30 @@ function ChatRoom() {
 }
 
 function PrivateChatRoom({ recipient }) {
-    const dummy = useRef();
-    const messagesRef = collection(firestore, 'private_messages');
-
     const [messages, setMessages] = useState([]);
+    const currentUserEmail = auth.currentUser.email;
+    const messagesRef = collection(firestore, 'private_messages');
+    const dummy = useRef();
+
     useEffect(() => {
-        const currentUserEmail = auth.currentUser.email;
         const sentMessagesQuery = query(messagesRef, where('sender', '==', currentUserEmail), where('recipient', '==', recipient), orderBy('createdAt', 'asc'));
         const receivedMessagesQuery = query(messagesRef, where('sender', '==', recipient), where('recipient', '==', currentUserEmail), orderBy('createdAt', 'asc'));
 
         const unsubscribeSent = onSnapshot(sentMessagesQuery, (snapshot) => {
-            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
+            const newSentMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), sentByCurrentUser: true }));
+            setMessages(prevMessages => [...prevMessages.filter(msg => msg.sender !== currentUserEmail), ...newSentMessages]);
         });
 
         const unsubscribeReceived = onSnapshot(receivedMessagesQuery, (snapshot) => {
-            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            setMessages(prevMessages => [...prevMessages, ...newMessages.filter(newMsg => !prevMessages.some(msg => msg.id === newMsg.id))]);
+            const newReceivedMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), sentByCurrentUser: false }));
+            setMessages(prevMessages => [...prevMessages.filter(msg => msg.sender !== recipient), ...newReceivedMessages]);
         });
 
         return () => {
             unsubscribeSent();
             unsubscribeReceived();
         };
-    }, [recipient]);
+    }, [currentUserEmail, recipient, messagesRef]);
 
     const [formValue, setFormValue] = useState('');
 
@@ -201,10 +201,14 @@ function PrivateChatRoom({ recipient }) {
         dummy.current.scrollIntoView({ behavior: 'smooth' });
     }    
 
+    const handleNewMessage = (newMessage) => {
+        setMessages(prevMessages => [...prevMessages, newMessage]);
+    };
+
     return (
         <>
             <div className='todoChat'>
-                {messages && messages.map((msg, index) => <ChatMessage key={index} message={msg} />)}
+                {messages.filter(msg => msg.createdAt).sort((a, b) => a.createdAt.toMillis() - b.createdAt.toMillis()).map((msg, index) => <ChatMessage key={index} message={msg} />)}
                 <div ref={dummy}></div>
             </div>
             <div style={{display:'flex', justifyContent:'center', alignContent:'end'}}>
@@ -218,17 +222,23 @@ function PrivateChatRoom({ recipient }) {
 }
 
 function ChatMessage(props) {
+    // Check if props.message is truthy
+    if (!props.message) {
+        // Return null or some fallback UI
+        return null;
+    }
+
     const { text, uid, photoURL } = props.message;
     const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';
 
     return (
         <>
             <div className={`message ${messageClass}`}>
-                <img className="usuariosChat"  src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='usuario' />
+                <img className="usuariosChat" src={photoURL || 'https://api.adorable.io/avatars/23/abott@adorable.png'} alt='usuario' />
                 <p className='mensajeChat'>{text}</p>
             </div>
         </>
-    )
+    );
 }
 
 function SignIn() {
