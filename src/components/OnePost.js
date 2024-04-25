@@ -8,7 +8,7 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-
+import Swal from 'sweetalert2';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -149,6 +149,15 @@ const OnePost = () => {
     };
 
     const sendComment = async (e) => {
+
+        if (!comment.trim()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Por favor, completa el campo',
+                text: 'Para enviar el formulario, necesitas completar el captcha.',
+            });
+            return;
+        }
         const docRef = await addDoc(comentsRef, {
             comment: comment,
             raiting: rating,
