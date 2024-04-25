@@ -6,8 +6,9 @@ import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where } from 'firebase/firestore';
+import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
+
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -52,14 +53,27 @@ const OnePost = () => {
     const emailProfesor = "sarl021022@gs.utm.mx"; // El email del profesor por el cual quieres filtrar
     const dummy = useRef();
     const comentsRef = collection(firestore, 'coments');
-    const q = query(comentsRef, orderBy('createdAt'), limit(25));
-    const [coments] = useCollectionData(q, { idField: 'id' });
+    const q = query(comentsRef, orderBy('createdAt'), limit(25), where('asesor_email', '==', secondBio));
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [dateRange, setDateRange] = useState([{
         startDate: new Date(),
         endDate: null,
         key: 'selection'
     }]);
+
+    const [coments, setComents] = useState([]); // Inicializa el estado para los comentarios
+
+    useEffect(() => {
+        const q = query(comentsRef, orderBy('createdAt'), limit(25), where('asesor_email', '==', secondBio));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const comments = querySnapshot.docs.map(doc => ({ ...doc.data(), id: doc.id }));
+            setComents(comments);
+        });
+    
+        // Limpia la suscripción al desmontar el componente
+        return () => unsubscribe();
+    }, [secondBio]);
+    
 
     const handleToggleDatePicker = () => {
         setShowDatePicker(!showDatePicker);
@@ -95,7 +109,6 @@ const OnePost = () => {
             }
         })
         .catch(err => console.error(err));
-        console.log(secondBio);
     }, [slug]);
 
     useEffect(() => {
@@ -129,19 +142,29 @@ const OnePost = () => {
     };
 
     const sendComment = async (e) => {
-        
-
-        await addDoc(comentsRef, {
+        const docRef = await addDoc(comentsRef, {
             comment: comment,
             raiting: rating,
             asesor_email: secondBio,
             createdAt: serverTimestamp(),
-            
         });
+    
+        // Agrega el nuevo comentario al estado local sin intentar obtener los datos del documento
+        setComents(prevComents => [...prevComents, {
+            id: docRef.id,
+            comment: comment,
+            raiting: rating,
+            asesor_email: secondBio,
+            createdAt: serverTimestamp(),
+        }]);
     }
+    
+    
 
     const handleSubmit = () => {
         sendComment();
+        setComment('');
+        setRating(0);
         closeModal();
     };
 
@@ -275,7 +298,7 @@ const OnePost = () => {
                         </div>
                         <div className="comment-container">
                             <label htmlFor="comment" className="comment-label">Deja tus comentarios:</label>
-                            <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' onChange={handleCommentChange}></textarea>
+                            <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' maxLength={150} onChange={handleCommentChange}></textarea>
                         </div>
                         <div className="button-container">
                             <button onClick={handleSubmit}>Enviar evaluación</button>
@@ -293,6 +316,9 @@ function ComentsFunctionShow(props) {
     let email_Filter = props.emailProfesor;
     console.log(email_Filter);
     const { asesor_email, comment, raiting } = props.message;
+    if (asesor_email !== email_Filter) {
+        return null;
+    }
     return (
         <>
         <div className="comment-container">
