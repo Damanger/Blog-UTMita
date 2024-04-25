@@ -9,6 +9,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where, getDocs, onSnapshot } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import Swal from 'sweetalert2';
+import ReCAPTCHA from 'react-google-recaptcha';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -47,6 +48,7 @@ function calculateAverageStars(ratings) {
     return average;
 }
 const OnePost = () => {
+    const [captcha, setCaptcha] = useState(null);
     const [postData, setPostData] = useState(null);
     const [showLoader, setShowLoader] = useState(true);
     const { slug } = useParams();
@@ -141,6 +143,9 @@ const OnePost = () => {
         setComment(e.target.value);
     };
 
+    const handleCaptcha = value => {
+        setCaptcha(value);
+    };
 
     const handleModalClick = (event) => {
         if (event.target.classList.contains('modal-comentarios')) {
@@ -157,6 +162,14 @@ const OnePost = () => {
                 text: 'Para enviar el formulario, necesitas completar el captcha.',
             });
             return;
+        }
+        if (!captcha) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Por favor, completa el captcha',
+                text: 'Para enviar el formulario, necesitas completar el captcha.',
+            });
+            return; // Detiene la ejecución de la función si el captcha no está completo
         }
         const docRef = await addDoc(comentsRef, {
             comment: comment,
@@ -326,6 +339,9 @@ const OnePost = () => {
                         <div className="comment-container">
                             <label htmlFor="comment" className="comment-label">Deja tus comentarios:</label>
                             <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' maxLength={150} minLength={20} onChange={handleCommentChange}></textarea>
+                        </div>
+                        <div>
+                                        <ReCAPTCHA sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
                         </div>
                         <div className="button-container">
                             <button onClick={handleSubmit}>Enviar evaluación</button>
