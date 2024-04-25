@@ -39,6 +39,13 @@ const urlFor = (source) => {
     return builder.image(source);
 }  
 
+function calculateAverageStars(ratings) {
+    if (ratings.length === 0) return 0;
+
+    const sum = ratings.reduce((total, rating) => total + rating, 0);
+    const average = sum / ratings.length;
+    return average;
+}
 const OnePost = () => {
     const [postData, setPostData] = useState(null);
     const [showLoader, setShowLoader] = useState(true);
@@ -157,8 +164,7 @@ const OnePost = () => {
             asesor_email: secondBio,
             createdAt: serverTimestamp(),
         }]);
-    }
-    
+    }    
     
 
     const handleSubmit = () => {
@@ -176,6 +182,11 @@ const OnePost = () => {
             body.style.overflow = 'auto';
         }
     }, [isOpen]);
+        // Obtener un array de todas las calificaciones de los comentarios
+    const ratingsArray = coments.map(comment => comment.raiting);
+
+        // Calcular el rating promedio
+    const averageRating = calculateAverageStars(ratingsArray);
 
     if (showLoader || !postData || !postData.title) {
         return( 
@@ -221,12 +232,19 @@ const OnePost = () => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     <h2>{postData.name}</h2>
-                    <h3>{secondBio}</h3>
+                    <span>Calificacion general</span>
+                      <div className="star-container">
+                        {[...Array(5)].map((_, index) => (
+                            <span key={index} className={index < averageRating ? 'star filled' : 'star'}>
+                                    ★
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
             <div className="ss">
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <h2>${thirdBio}/hra</h2>
+                    <h2 style={{color:"#117A65"}}>${thirdBio}/hra</h2>
                     <h3 style={{marginTop:'-1rem'}}>Horarios: {fourhtBio}</h3>
                     <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
@@ -298,7 +316,7 @@ const OnePost = () => {
                         </div>
                         <div className="comment-container">
                             <label htmlFor="comment" className="comment-label">Deja tus comentarios:</label>
-                            <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' maxLength={150} onChange={handleCommentChange}></textarea>
+                            <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' maxLength={150} minLength={20} onChange={handleCommentChange}></textarea>
                         </div>
                         <div className="button-container">
                             <button onClick={handleSubmit}>Enviar evaluación</button>
@@ -314,7 +332,6 @@ function ComentsFunctionShow(props) {
     const fullStarColor = "#ffc107"; // Color para estrellas llenas
     const emptyStarColor = "#e4e5e9"; // Color para estrellas vacías
     let email_Filter = props.emailProfesor;
-    console.log(email_Filter);
     const { asesor_email, comment, raiting } = props.message;
     if (asesor_email !== email_Filter) {
         return null;
@@ -334,12 +351,6 @@ function ComentsFunctionShow(props) {
         </>
     )
 }
-function calculateAverageStars(params) {
-    let average=0;
-    for (let star = 0; star < params.length; star++) {
-        average = params[star] + average; 
-    }
-    return average;
-}
+
 
 export default OnePost;
