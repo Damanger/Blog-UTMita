@@ -254,7 +254,7 @@ const OnePost = () => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     <h2>{postData.name}</h2>
-                    <span>Calificacion general</span>
+                    <span>Calificación general:</span>
                       <div className="star-container">
                         {[...Array(5)].map((_, index) => (
                             <span key={index} className={index < averageRating ? 'star filled' : 'star'}>
@@ -262,6 +262,17 @@ const OnePost = () => {
                             </span>
                         ))}
                     </div>
+                    <div className="rating-text">
+                            {averageRating !== 0 && (
+                                <>
+                                    {averageRating === 1 && <span>No recomendado</span>}
+                                    {averageRating === 2 && <span>Malo</span>}
+                                    {averageRating === 3 && <span>Regular</span>}
+                                    {averageRating === 4 && <span>Muy bueno</span>}
+                                    {averageRating === 5 && <span>Excelente</span>}
+                                </>
+                            )}
+                        </div>
                 </div>
             </div>
             <div className="ss">
@@ -340,7 +351,7 @@ const OnePost = () => {
                             <label htmlFor="comment" className="comment-label">Deja tus comentarios:</label>
                             <textarea id="comment" className="comment-textarea" cols="30" rows="10" value={comment} placeholder='Deja tus comentarios aquí...' maxLength={150} minLength={20} onChange={handleCommentChange}></textarea>
                         </div>
-                        <div>
+                        <div className='captcha-container'>
                                         <ReCAPTCHA sitekey="6LcFb7YpAAAAAKMGk7zzrJkOXMQUvNPdoB4JlMnS" onChange={handleCaptcha} />
                         </div>
                         <div className="button-container">
@@ -364,7 +375,7 @@ function ComentsFunctionShow(props) {
     return (
         <>
         <div className="comment-container">
-            <div className="star-container">
+            <div className="star-container-coment">
                 {[...Array(5)].map((_, index) => (
                     <span key={index} style={{ color: index < raiting ? fullStarColor : emptyStarColor }}>
                         ★

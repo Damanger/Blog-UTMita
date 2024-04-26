@@ -117,6 +117,10 @@
     "ss5";
   }
 }
+.captcha-container
+{
+  margin-left: 3rem;
+}
 
 .icon{
   text-align: center;
@@ -472,12 +476,19 @@
   margin-bottom: 0.8rem;
   font-size: 4rem; 
 }
-
+.star-container-coment {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.8rem;
+  font-size: 1.5rem; 
+}
 .star {
   font-size: 50px;
   cursor: pointer;
   color: grey;
 }
+
 
 .filled {
   color: gold;
@@ -527,10 +538,13 @@
     margin-left: 1rem;
     background-color: #212121;
   }
+  .captcha-container
+{
+  margin-left: .5rem;
+}
 }
 .comment-container{
-  margin: 0;
-  padding: 0;
+
   background-color: #313131;
 }
 
