@@ -14,6 +14,7 @@ import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import '../css/OnePost.css';
+import { set } from 'date-fns';
 
 const firebaseApp = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -50,6 +51,7 @@ const OnePost = () => {
     const [secondBio, setSecondBio] = useState('');
     const [thirdBio, setThirdBio] = useState('');
     const [fourhtBio, setFourhtBio] = useState('');
+    const [fifthBio, setFifthBio] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
@@ -104,6 +106,7 @@ const OnePost = () => {
                 setSecondBio(bioArray[1]);
                 setThirdBio(bioArray[2]);
                 setFourhtBio(bioArray[3]);
+                setFifthBio(bioArray[4]);
             }else{
                 console.error('No se encontró la bio');
             }
@@ -275,7 +278,7 @@ const OnePost = () => {
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
                     </button>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                    <a href="https://www.paypal.me/socruR" target="_blank" rel="noreferrer">
+                    <a href={`https://www.paypal.me/${fifthBio}`} target="_blank" rel="noreferrer">
                         <button>Pagar</button>
                     </a>
                 </div>
