@@ -157,7 +157,6 @@ const App = () => {
           floating={true}
           botAvatar="https://raw.githubusercontent.com/Damanger/Portfolio/main/public/Ardilla.webp"
           userAvatar="https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Blank_user.svg/1707px-Blank_user.svg.png"
-          floatingIcon={<div className="custom-floating-icon" />}
           headerTitle="UTMita ChatBot"
           placeholder="Escribe tu mensaje..."
         />
