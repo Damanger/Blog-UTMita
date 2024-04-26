@@ -246,6 +246,7 @@ const OnePost = () => {
                 </div>
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     <h2>{postData.name}</h2>
+                    <h3>{secondBio}</h3>
                     <span>Calificación general:</span>
                     <div className="star-container">
                         {[...Array(5)].map((_, index) => (
