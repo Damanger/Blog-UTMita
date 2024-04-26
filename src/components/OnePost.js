@@ -5,19 +5,15 @@ import imageUrlBuilder from '@sanity/image-url';
 import BlockContent from '@sanity/block-content-to-react';
 import { Link } from 'react-router-dom';
 import { initializeApp } from 'firebase/app';
-import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
-import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where, getDocs, onSnapshot } from 'firebase/firestore';
-import { useAuthState } from 'react-firebase-hooks/auth';
+import { getFirestore, collection, query, orderBy, limit, addDoc, serverTimestamp, where, onSnapshot } from 'firebase/firestore';
 import Swal from 'sweetalert2';
 import ReCAPTCHA from 'react-google-recaptcha';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { faWeixin, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { DateRangePicker } from 'react-date-range';
 import 'react-date-range/dist/styles.css';
 import 'react-date-range/dist/theme/default.css';
 import '../css/OnePost.css';
-import { set } from 'date-fns';
 
 const firebaseApp = initializeApp({
     apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -29,7 +25,6 @@ const firebaseApp = initializeApp({
     measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID
 });
 
-const auth = getAuth(firebaseApp);
 const firestore = getFirestore(firebaseApp);
 
 
@@ -58,10 +53,8 @@ const OnePost = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [rating, setRating] = useState(0);
     const [comment, setComment] = useState('');
-    const emailProfesor = "sarl021022@gs.utm.mx"; // El email del profesor por el cual quieres filtrar
     const dummy = useRef();
     const comentsRef = collection(firestore, 'coments');
-    const q = query(comentsRef, orderBy('createdAt'), limit(25), where('asesor_email', '==', secondBio));
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [dateRange, setDateRange] = useState([{
         startDate: new Date(),

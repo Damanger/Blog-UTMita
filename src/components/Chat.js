@@ -3,7 +3,6 @@ import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, onSnapshot, collection, query, where, getDocs, orderBy, limit, addDoc, serverTimestamp } from 'firebase/firestore';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import PropTypes from 'prop-types';
 import '../css/chat.css';
@@ -207,10 +206,6 @@ function PrivateChatRoom({ recipient }) {
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
     }    
-
-    const handleNewMessage = (newMessage) => {
-        setMessages(prevMessages => [...prevMessages, newMessage]);
-    };
 
     return (
         <>
