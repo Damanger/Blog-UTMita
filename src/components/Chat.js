@@ -32,9 +32,9 @@ const Chat = () => {
     useEffect(() => {
         if (user) {
             const fetchPrivateChatTabs = async () => {
-                // Verifica si el usuario actual es Omar
+                // Verifica si el usuario actual es profesor
                 if (user.email === 'curo970902@gs.utm.mx' || user.email === 'sarl021022@gs.utm.mx' || user.email === 'rore021226@gs.utm.mx' || user.email === 'vaaa020526@gs.utm.mx' || user.email === 'lolf020610@gs.utm.mx' || user.email === 'aupj021014@gs.utm.mx' || user.email === 'socr010910@gs.utm.mx' || user.email === 'oirj030920@gs.utm.mx' || user.email === 'gaha020310@gs.utm.mx') {
-                    // Para Omar, busca los mensajes privados que recibió
+                    // Para cada profe, busca los mensajes privados que recibió
                     const messagesRef = collection(firestore, 'private_messages');
                     const q = query(messagesRef, where('recipient', '==', user.email));
                     const querySnapshot = await getDocs(q);
