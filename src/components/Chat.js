@@ -114,48 +114,54 @@ const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab })
 function ChatRoom() {
     const dummy = useRef();
     const messagesRef = collection(firestore, 'messages');
-    const q = query(messagesRef, orderBy('createdAt'), limit(25));
+    const q = query(messagesRef, orderBy('createdAt', 'asc'), limit(25)); // Ordenar los mensajes por fecha ascendente
     const ChatMessageMemo = React.memo(ChatMessage);
 
     const [messages, setMessages] = useState([]);
+
     useEffect(() => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
-            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            // Agrega los nuevos mensajes al principio del array de mensajes
-            setMessages(prevMessages => [...newMessages, ...prevMessages]);
+            const newMessages = snapshot.docChanges().map(change => {
+                if (change.type === 'added') {
+                    return { id: change.doc.id, ...change.doc.data() };
+                }
+                return null;
+            }).filter(message => message !== null);
+
+            setMessages(prevMessages => [...prevMessages, ...newMessages]);
         });
-    
+
         return () => unsubscribe();
-    }, []);    
+    }, []);
 
     const [formValue, setFormValue] = useState('');
 
     const sendMessage = async (e) => {
         e.preventDefault();
-    
+
         const { uid, photoURL } = auth.currentUser;
-    
+
         await addDoc(messagesRef, {
             text: formValue,
             createdAt: serverTimestamp(),
             uid,
             photoURL
         });
-    
+
         setFormValue('');
         dummy.current.scrollIntoView({ behavior: 'smooth' });
-    }    
+    }
 
     return (
         <>
             <div className='todoChat'>
-            {messages && messages.map((msg, index) => <ChatMessageMemo key={index} message={msg} />)}
+                {messages.map((msg, index) => <ChatMessageMemo key={msg.id} message={msg} />)}
                 <span ref={dummy}></span>
             </div>
-            <div style={{display:'flex', justifyContent:'center', alignContent:'end'}}>
+            <div style={{ display: 'flex', justifyContent: 'center', alignContent: 'end' }}>
                 <form className='formChat' onSubmit={sendMessage}>
                     <input className='inputChat' value={formValue} onChange={(e) => setFormValue(e.target.value)} placeholder="Escribe tu mensaje aquí..." />
-                    <button className='enviarChat' type="submit" disabled={!formValue} style={{display:'flex', justifyContent:'center', alignItems:'center', textAlign:'center'}} >🕊️</button>
+                    <button className='enviarChat' type="submit" disabled={!formValue} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', textAlign: 'center' }} >🕊️</button>
                 </form>
             </div>
         </>
