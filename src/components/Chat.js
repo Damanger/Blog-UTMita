@@ -33,7 +33,12 @@ const Chat = () => {
         if (user) {
             const fetchPrivateChatTabs = async () => {
                 // Verifica si el usuario actual es profesor
-                if (user.email === 'curo970902@gs.utm.mx' || user.email === 'sarl021022@gs.utm.mx' || user.email === 'rore021226@gs.utm.mx' || user.email === 'vaaa020526@gs.utm.mx' || user.email === 'lolf020610@gs.utm.mx' || user.email === 'aupj021014@gs.utm.mx' || user.email === 'socr010910@gs.utm.mx' || user.email === 'oirj030920@gs.utm.mx' || user.email === 'gaha020310@gs.utm.mx') {
+                if (user.email === 'curo970902@gs.utm.mx' || user.email === 'sarl021022@gs.utm.mx' 
+                || user.email === 'rore021226@gs.utm.mx' || user.email === 'vaaa020526@gs.utm.mx' 
+                || user.email === 'lolf020610@gs.utm.mx' || user.email === 'aupj021014@gs.utm.mx' 
+                || user.email === 'socr010910@gs.utm.mx' || user.email === 'oirj030920@gs.utm.mx' 
+                || user.email === 'gaha020310@gs.utm.mx' || user.email === 'macv990326@gs.utm.mx' 
+                || user.email === 'gaod000203@gs.utm.mx' || user.email === 'caue981007@gs.utm.mx') {
                     // Para cada profe, busca los mensajes privados que recibió
                     const messagesRef = collection(firestore, 'private_messages');
                     const q = query(messagesRef, where('recipient', '==', user.email));
@@ -45,7 +50,11 @@ const Chat = () => {
                     setPrivateChatTabs(Array.from(senders));
                 } else {
                     // Para otros usuarios, solo muestra la pestaña para Profes
-                    setPrivateChatTabs(['curo970902@gs.utm.mx', 'sarl021022@gs.utm.mx', 'rore021226@gs.utm.mx', 'vaaa020526@gs.utm.mx', 'lolf020610@gs.utm.mx', 'aupj021014@gs.utm.mx', 'socr010910@gs.utm.mx', 'oirj030920@gs.utm.mx', 'gaha020310@gs.utm.mx']);
+                    setPrivateChatTabs(['curo970902@gs.utm.mx', 'sarl021022@gs.utm.mx',
+                    'rore021226@gs.utm.mx', 'vaaa020526@gs.utm.mx', 'lolf020610@gs.utm.mx',
+                    'aupj021014@gs.utm.mx', 'socr010910@gs.utm.mx', 'oirj030920@gs.utm.mx',
+                    'gaha020310@gs.utm.mx', 'macv990326@gs.utm.mx', 'gaod000203@gs.utm.mx',
+                    'caue981007@gs.utm.mx']);
                 }
             };
             fetchPrivateChatTabs();
