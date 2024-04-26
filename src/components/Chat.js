@@ -115,6 +115,7 @@ function ChatRoom() {
     const dummy = useRef();
     const messagesRef = collection(firestore, 'messages');
     const q = query(messagesRef, orderBy('createdAt'), limit(25));
+    const ChatMessageMemo = React.memo(ChatMessage);
 
     const [messages, setMessages] = useState([]);
     useEffect(() => {
@@ -148,7 +149,7 @@ function ChatRoom() {
     return (
         <>
             <div className='todoChat'>
-                {messages && messages.map((msg, index) => <ChatMessage key={index} message={msg} />)}
+            {messages && messages.map((msg, index) => <ChatMessageMemo key={index} message={msg} />)}
                 <span ref={dummy}></span>
             </div>
             <div style={{display:'flex', justifyContent:'center', alignContent:'end'}}>
@@ -168,24 +169,16 @@ function PrivateChatRoom({ recipient }) {
     const dummy = useRef();
 
     useEffect(() => {
-        const sentMessagesQuery = query(messagesRef, where('sender', '==', currentUserEmail), where('recipient', '==', recipient), orderBy('createdAt', 'asc'));
-        const receivedMessagesQuery = query(messagesRef, where('sender', '==', recipient), where('recipient', '==', currentUserEmail), orderBy('createdAt', 'asc'));
-
-        const unsubscribeSent = onSnapshot(sentMessagesQuery, (snapshot) => {
-            const newSentMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), sentByCurrentUser: true }));
-            setMessages(prevMessages => [...prevMessages.filter(msg => msg.sender !== currentUserEmail), ...newSentMessages]);
+        const messagesRef = collection(firestore, 'private_messages');
+        const querySentReceived = query(messagesRef, where('sender', 'in', [currentUserEmail, recipient]), where('recipient', 'in', [currentUserEmail, recipient]), orderBy('createdAt', 'asc'));
+    
+        const unsubscribe = onSnapshot(querySentReceived, (snapshot) => {
+            const newMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), sentByCurrentUser: doc.data().sender === currentUserEmail }));
+            setMessages(newMessages);
         });
-
-        const unsubscribeReceived = onSnapshot(receivedMessagesQuery, (snapshot) => {
-            const newReceivedMessages = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data(), sentByCurrentUser: false }));
-            setMessages(prevMessages => [...prevMessages.filter(msg => msg.sender !== recipient), ...newReceivedMessages]);
-        });
-
-        return () => {
-            unsubscribeSent();
-            unsubscribeReceived();
-        };
-    }, [currentUserEmail, recipient, messagesRef]);
+    
+        return () => unsubscribe();
+    }, [currentUserEmail, recipient, firestore]);
 
     const [formValue, setFormValue] = useState('');
 

@@ -74,7 +74,6 @@ const OnePost = () => {
         // Limpia la suscripción al desmontar el componente
         return () => unsubscribe();
     }, [secondBio]);
-    
 
     const handleToggleDatePicker = () => {
         setShowDatePicker(!showDatePicker);
