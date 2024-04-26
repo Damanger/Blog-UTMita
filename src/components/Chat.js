@@ -39,7 +39,7 @@ const Chat = () => {
                 || user.email === 'socr010910@gs.utm.mx' || user.email === 'oirj030920@gs.utm.mx' 
                 || user.email === 'gaha020310@gs.utm.mx' || user.email === 'macv990326@gs.utm.mx' 
                 || user.email === 'gaod000203@gs.utm.mx' || user.email === 'caue981007@gs.utm.mx'
-                || user.email === 'sagl981027@gs.utm.mx') {
+                || user.email === 'sagl981027@gs.utm.mx' || user.email === 'vazj011224@gs.utm.mx') {
                     // Para cada profe, busca los mensajes privados que recibió
                     const messagesRef = collection(firestore, 'private_messages');
                     const q = query(messagesRef, where('recipient', '==', user.email));
@@ -55,7 +55,7 @@ const Chat = () => {
                     'rore021226@gs.utm.mx', 'vaaa020526@gs.utm.mx', 'lolf020610@gs.utm.mx',
                     'aupj021014@gs.utm.mx', 'socr010910@gs.utm.mx', 'oirj030920@gs.utm.mx',
                     'gaha020310@gs.utm.mx', 'macv990326@gs.utm.mx', 'gaod000203@gs.utm.mx',
-                    'caue981007@gs.utm.mx', 'sagl981027@gs.utm.mx']);
+                    'caue981007@gs.utm.mx', 'sagl981027@gs.utm.mx', 'vazj011224@gs.utm.mx']);
                 }
             };
             fetchPrivateChatTabs();
