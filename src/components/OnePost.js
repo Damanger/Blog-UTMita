@@ -282,6 +282,11 @@ const OnePost = () => {
                     <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
                     </button>
+                <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
+                    <a href="https://www.paypal.me/socruR" target="_blank" rel="noreferrer">
+                        <button>Pagar</button>
+                    </a>
+                </div>
                 </div>
                 <div style={{display:'flex', justifyContent:'center'}} className={`DateRangePickerContainer ${showDatePicker ? 'active' : ''}`}>
                     {showDatePicker && (
