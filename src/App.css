@@ -36,12 +36,6 @@ button {
     border-radius: 0.1rem;
 }
 
-.custom-floating-icon {
-    width: 40px;
-    height: 40px;
-    background-size: contain;
-}
-
 .rsc-footer input{
     color: black;
 }
