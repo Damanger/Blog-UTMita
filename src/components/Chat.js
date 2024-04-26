@@ -34,7 +34,7 @@ const Chat = () => {
         if (user) {
             const fetchPrivateChatTabs = async () => {
                 // Verifica si el usuario actual es Omar
-                if (user.email === 'omar.cruzr97@gmail.com') {
+                if (user.email === 'curo970902@gs.utm.mx' || user.email === 'sarl021022@gs.utm.mx' || user.email === 'rore021226@gs.utm.mx' || user.email === 'vaaa020526@gs.utm.mx' || user.email === 'lolf020610@gs.utm.mx' || user.email === 'aupj021014@gs.utm.mx' || user.email === 'socr010910@gs.utm.mx' || user.email === 'oirj030920@gs.utm.mx' || user.email === 'gaha020310@gs.utm.mx') {
                     // Para Omar, busca los mensajes privados que recibió
                     const messagesRef = collection(firestore, 'private_messages');
                     const q = query(messagesRef, where('recipient', '==', user.email));
@@ -45,8 +45,8 @@ const Chat = () => {
                     });
                     setPrivateChatTabs(Array.from(senders));
                 } else {
-                    // Para otros usuarios, solo muestra la pestaña para Omar
-                    setPrivateChatTabs(['omar.cruzr97@gmail.com']);
+                    // Para otros usuarios, solo muestra la pestaña para Profes
+                    setPrivateChatTabs(['curo970902@gs.utm.mx', 'sarl021022@gs.utm.mx', 'rore021226@gs.utm.mx', 'vaaa020526@gs.utm.mx', 'lolf020610@gs.utm.mx', 'aupj021014@gs.utm.mx', 'socr010910@gs.utm.mx', 'oirj030920@gs.utm.mx', 'gaha020310@gs.utm.mx']);
                 }
             };
             fetchPrivateChatTabs();
@@ -54,12 +54,12 @@ const Chat = () => {
     }, [user]);
     
     const handlePrevTab = () => {
-        setCurrentTab((prevTab) => prevTab - 1);
+        setCurrentTab((prevTab) => Math.max(prevTab - 1, 0));
     };
-
+    
     const handleNextTab = () => {
-        setCurrentTab((prevTab) => prevTab + 1);
-    };
+        setCurrentTab((prevTab) => Math.min(prevTab + 1, privateChatTabs.length - 2));
+    };    
 
     return (
         <div style={{height:'100vh', width:'100vw', overflowX:'hidden'}}>
@@ -93,8 +93,8 @@ const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab })
                 {privateChatTabs.length > 2 && currentTab > 0 && (
                     <button className="arrow-button" onClick={handlePrevTab}>‹</button>
                 )}
-                {privateChatTabs.map((sender, index) => (
-                    <Tab className={`tabs ${selectedTab === index + 1 ? 'selected-tab' : ''}`} style={{ cursor: 'pointer', listStyleType: 'none' }} key={index} onClick={() => handleTabClick(index + 1)}>{sender}</Tab>
+                {privateChatTabs.slice(currentTab, currentTab + 2).map((sender, index) => (
+                    <Tab className={`tabs private-tab ${selectedTab === currentTab + index + 1 ? 'selected-tab' : ''}`} style={{ cursor: 'pointer', listStyleType: 'none' }} key={index} onClick={() => handleTabClick(currentTab + index + 1)}>{sender}</Tab>
                 ))}
                 {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
                     <button className="arrow-button" onClick={handleNextTab}>›</button>
@@ -103,7 +103,7 @@ const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab })
             <TabPanel>
                 <ChatRoom />
             </TabPanel>
-            {privateChatTabs.slice(currentTab, currentTab + 5).map((sender, index) => (
+            {privateChatTabs.slice(currentTab, currentTab + 2).map((sender, index) => (
                 <TabPanel key={index}>
                     <PrivateChatRoom recipient={sender} />
                 </TabPanel>
