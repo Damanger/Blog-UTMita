@@ -277,7 +277,7 @@ const OnePost = () => {
             </div>
             <div className="ss">
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <h2><span style={{color:"#117A65"}}>${thirdBio}</span>/hra</h2>
+                    <h2><span style={{color:"#18b495"}}>${thirdBio}</span> / hra</h2>
                     <h3 style={{marginTop:'-1rem'}}>Horarios: {fourhtBio}</h3>
                     <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
