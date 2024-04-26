@@ -37,7 +37,6 @@ button {
 }
 
 .custom-floating-icon {
-    background: url('https://raw.githubusercontent.com/Damanger/Portfolio/main/public/Ardilla.webp') no-repeat;
     width: 40px;
     height: 40px;
     background-size: contain;
