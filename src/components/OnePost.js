@@ -255,29 +255,29 @@ const OnePost = () => {
                 <div style={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     <h2>{postData.name}</h2>
                     <span>Calificación general:</span>
-                      <div className="star-container">
+                    <div className="star-container">
                         {[...Array(5)].map((_, index) => (
                             <span key={index} className={index < averageRating ? 'star filled' : 'star'}>
-                                    ★
+                                ★
                             </span>
                         ))}
                     </div>
                     <div className="rating-text">
-                            {averageRating !== 0 && (
-                                <>
-                                    {averageRating === 1 && <span>No recomendado</span>}
-                                    {averageRating === 2 && <span>Malo</span>}
-                                    {averageRating === 3 && <span>Regular</span>}
-                                    {averageRating === 4 && <span>Muy bueno</span>}
-                                    {averageRating === 5 && <span>Excelente</span>}
-                                </>
-                            )}
-                        </div>
+                        {averageRating !== 0 && (
+                            <>
+                                {averageRating === 1 && <span>No recomendado</span>}
+                                {averageRating === 2 && <span>Malo</span>}
+                                {averageRating === 3 && <span>Regular</span>}
+                                {averageRating === 4 && <span>Muy bueno</span>}
+                                {averageRating === 5 && <span>Excelente</span>}
+                            </>
+                        )}
+                    </div>
                 </div>
             </div>
             <div className="ss">
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
-                    <h2 style={{color:"#117A65"}}>${thirdBio}/hra</h2>
+                    <h2><span style={{color:"#117A65"}}>${thirdBio}</span>/hra</h2>
                     <h3 style={{marginTop:'-1rem'}}>Horarios: {fourhtBio}</h3>
                     <button style={{marginBottom:'0.5rem'}} onClick={handleToggleDatePicker}>
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
