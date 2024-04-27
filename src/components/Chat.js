@@ -30,37 +30,32 @@ const Chat = () => {
     const [currentTab, setCurrentTab] = useState(0);
 
     useEffect(() => {
-        if (user) {
-            const fetchPrivateChatTabs = async () => {
-                // Verifica si el usuario actual es profesor
-                if (user.email === 'curo970902@gs.utm.mx' || user.email === 'sarl021022@gs.utm.mx' 
-                || user.email === 'rore021226@gs.utm.mx' || user.email === 'vaaa020526@gs.utm.mx' 
-                || user.email === 'lolf020610@gs.utm.mx' || user.email === 'aupj021014@gs.utm.mx' 
-                || user.email === 'socr010910@gs.utm.mx' || user.email === 'oirj030920@gs.utm.mx' 
-                || user.email === 'gaha020310@gs.utm.mx' || user.email === 'macv990326@gs.utm.mx' 
-                || user.email === 'gaod000203@gs.utm.mx' || user.email === 'caue981007@gs.utm.mx'
-                || user.email === 'sagl981027@gs.utm.mx' || user.email === 'vazj011224@gs.utm.mx') {
-                    // Para cada profe, busca los mensajes privados que recibió
-                    const messagesRef = collection(firestore, 'private_messages');
-                    const q = query(messagesRef, where('recipient', '==', user.email));
-                    const querySnapshot = await getDocs(q);
-                    const senders = new Set();
-                    querySnapshot.forEach((doc) => {
-                        senders.add(doc.data().sender);
-                    });
-                    setPrivateChatTabs(Array.from(senders));
-                } else {
-                    // Para otros usuarios, solo muestra la pestaña para Profes
-                    setPrivateChatTabs(['curo970902@gs.utm.mx', 'sarl021022@gs.utm.mx',
-                    'rore021226@gs.utm.mx', 'vaaa020526@gs.utm.mx', 'lolf020610@gs.utm.mx',
-                    'aupj021014@gs.utm.mx', 'socr010910@gs.utm.mx', 'oirj030920@gs.utm.mx',
-                    'gaha020310@gs.utm.mx', 'macv990326@gs.utm.mx', 'gaod000203@gs.utm.mx',
-                    'caue981007@gs.utm.mx', 'sagl981027@gs.utm.mx', 'vazj011224@gs.utm.mx']);
-                }
-            };
-            fetchPrivateChatTabs();
-        }
+        const professorEmails = [
+            'curo970902@gs.utm.mx', 'sarl021022@gs.utm.mx', 'rore021226@gs.utm.mx', 
+            'vaaa020526@gs.utm.mx', 'lolf020610@gs.utm.mx', 'aupj021014@gs.utm.mx', 
+            'socr010910@gs.utm.mx', 'oirj030920@gs.utm.mx', 'gaha020310@gs.utm.mx', 
+            'macv990326@gs.utm.mx', 'gaod000203@gs.utm.mx', 'caue981007@gs.utm.mx',
+            'sagl981027@gs.utm.mx', 'vazj011224@gs.utm.mx'
+        ];
+    
+        const fetchPrivateChatTabs = async () => {
+            if (user && professorEmails.includes(user.email)) {
+                const messagesRef = collection(firestore, 'private_messages');
+                const q = query(messagesRef, where('recipient', '==', user.email));
+                const querySnapshot = await getDocs(q);
+                const senders = new Set();
+                querySnapshot.forEach((doc) => {
+                    senders.add(doc.data().sender);
+                });
+                setPrivateChatTabs(Array.from(senders));
+            } else {
+                setPrivateChatTabs(professorEmails);
+            }
+        };
+    
+        fetchPrivateChatTabs();
     }, [user]);
+    
     
     const handlePrevTab = () => {
         setCurrentTab((prevTab) => Math.max(prevTab - 1, 0));
