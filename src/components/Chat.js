@@ -56,7 +56,6 @@ const Chat = () => {
         fetchPrivateChatTabs();
     }, [user]);
     
-    
     const handlePrevTab = () => {
         setCurrentTab((prevTab) => Math.max(prevTab - 1, 0));
     };
@@ -97,10 +96,10 @@ const ChatTabs = ({ privateChatTabs, currentTab, handlePrevTab, handleNextTab })
                 {privateChatTabs.length > 2 && currentTab > 0 && (
                     <button className="arrow-button" onClick={handlePrevTab}>‹</button>
                 )}
-                {privateChatTabs.slice(currentTab, currentTab + 2).map((sender, index) => (
+                {privateChatTabs.slice(currentTab, currentTab + 1).map((sender, index) => (
                     <Tab className={`tabs private-tab ${selectedTab === currentTab + index + 1 ? 'selected-tab' : ''}`} style={{ cursor: 'pointer', listStyleType: 'none' }} key={index} onClick={() => handleTabClick(currentTab + index + 1)}>{sender}</Tab>
                 ))}
-                {privateChatTabs.length > 2 && currentTab < privateChatTabs.length - 2 && (
+                {privateChatTabs.length > 1 && currentTab < privateChatTabs.length - 1 && (
                     <button className="arrow-button" onClick={handleNextTab}>›</button>
                 )}
             </TabList>
