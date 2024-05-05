@@ -279,7 +279,7 @@ const OnePost = () => {
                     </button>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
                     <a href={`https://www.paypal.me/${fifthBio}/${thirdBio}`} target="_blank" rel="noreferrer">
-                        <button>Pagar ${thirdBio}</button>
+                        <button>Pagar ${thirdBio}Mxn</button>
                     </a>
                 </div>
                 </div>
