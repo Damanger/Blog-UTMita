@@ -278,8 +278,8 @@ const OnePost = () => {
                         {showDatePicker ? 'Ocultar Calendario' : 'Mostrar Calendario'}
                     </button>
                 <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-                    <a href={`https://www.paypal.me/${fifthBio}`} target="_blank" rel="noreferrer">
-                        <button>Pagar</button>
+                    <a href={`https://www.paypal.me/${fifthBio}/${thirdBio}`} target="_blank" rel="noreferrer">
+                        <button>Pagar ${thirdBio}</button>
                     </a>
                 </div>
                 </div>
